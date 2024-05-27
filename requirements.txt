@@ -1,0 +1,5 @@
+py-etherscan-api==0.8.0
+openai==0.28
+slither
+streamlit
+pandas

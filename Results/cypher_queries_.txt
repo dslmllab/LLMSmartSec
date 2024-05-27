@@ -1,0 +1,2110 @@
+CREATE (:Contract {id: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'})
+
+CREATE (:Interface {name: 'IERC20'})
+
+WITH *
+MATCH (c:Contract {id: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'})
+MATCH (i:Interface {name: 'IERC20'})
+CREATE (c)-[:IMPLEMENTS]->(i)
+
+CREATE (:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+
+CREATE (:Library {name: 'BokkyPooBahsDateTimeLibrary'})
+
+WITH *
+MATCH (c:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+MATCH (l:Library {name: 'BokkyPooBahsDateTimeLibrary'})
+CREATE (c)-[:USES]->(l)
+
+CREATE (c:Contract {id: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'})
+WITH c
+CREATE (i:LLM_Insights {insights: 'Add insights and observations from LLM audit here'})
+
+CREATE (v:Variable {name: 'IERC20', type: 'interface'})
+CREATE (f:Function {name: 'balanceOf', visibility: 'external', returnType: 'returns'})
+
+WITH c, i, v, f
+MATCH (c)
+CREATE (v)-[:REFERENCES]->(c)
+CREATE (f)-[:CALLS]->(v)
+CREATE (i)-[:HAS_INSIGHT]->(c)
+
+CREATE (:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+
+CREATE (:LLM_Insights {insights: 'Audit insights and observations'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+CREATE (:Library {name: 'BokkyPooBahsDateTimeLibrary'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}), (l:Library {name: 'BokkyPooBahsDateTimeLibrary'})
+CREATE (c)-[:USES_LIBRARY]->(l)
+
+CREATE (c:Contract {id: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+
+CREATE (u:Variable {name: 'UserInfo', type: 'struct'})
+CREATE (a:Variable {name: 'amount', type: 'uint256'})
+CREATE (r:Variable {name: 'r', type: 'uint256'})
+
+CREATE (llm:LLM_Insights {insights: 'Audit insights and observations'})
+
+WITH c, u, a, r, llm
+
+MATCH (c)
+CREATE (c)-[:DEFINES]->(u),
+       (u)-[:HAS]->(a),
+       (u)-[:HAS]->(r),
+       (c)-[:HAS_INSIGHT]->(llm)
+
+CREATE (c:Contract {id: '0x0114622386c1a00686e594c70682d7aa0f8afa29'})
+
+CREATE (llm:LLM_Insights)
+SET llm.insights = "LLM audit insights and observations"
+
+WITH c, llm
+
+CREATE (entity:Entity {name: 'Address', type: 'Library'})
+CREATE (function:Function {name: 'isContract', visibility: 'internal', view: true, returns: 'bool'})
+
+WITH c, llm, entity, function
+
+CREATE (c)-[:HAS_INSIGHT]->(llm)
+CREATE (c)-[:DEFINES]->(entity)
+CREATE (entity)-[:CONTAINS]->(function)
+
+CREATE (:Contract {id: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'})
+
+CREATE (:Contract {name: 'Initializable'})
+WITH
+CREATE (:LLM_Insights {insights: 'Audit findings and observations'})
+
+MATCH (c:Contract {id: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'})
+MATCH (contract:Contract {name: 'Initializable'})
+MATCH (insights:LLM_Insights {insights: 'Audit findings and observations'})
+
+CREATE (c)-[:HAS_INSIGHT]->(insights)
+CREATE (c)-[:REFERENCES]->(contract)
+
+CREATE (:Contract {id: '0x01b23286ff60a543ec29366ae8d6b6274ca20541'})
+
+CREATE (:Function {name: 'totalSupply', visibility: 'external', returnType: 'uint256'})
+
+CREATE (:LLM_Insights {insights: 'No insights available'})
+
+WITH *
+MATCH (c:Contract {id: '0x01b23286ff60a543ec29366ae8d6b6274ca20541'})
+CREATE (c)-[:DEFINES]->(:Function {name: 'totalSupply'})
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+CREATE (:Contract {id: '0x01b952402442630232f32d48380a557015b7c5ec'})
+
+CREATE (:Enum {name: 'MathError'})
+CREATE (:EnumValue {name: 'NO_ERROR', type: 'MathError'})
+CREATE (:EnumValue {name: 'DIVISION_BY_ZERO', type: 'MathError'})
+CREATE (:EnumValue {name: 'INTEGER_OVERFLOW', type: 'MathError'})
+CREATE (:EnumValue {name: 'INTEGER_UNDERF', type: 'MathError'})
+
+CREATE (:LLM_Insights {insights: 'LLM audit insights'})
+
+WITH *
+MATCH (c:Contract {id: '0x01b952402442630232f32d48380a557015b7c5ec'})
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+MATCH (e:Enum {name: 'MathError'})
+MATCH (ev1:EnumValue {name: 'NO_ERROR', type: 'MathError'})
+MATCH (ev2:EnumValue {name: 'DIVISION_BY_ZERO', type: 'MathError'})
+MATCH (ev3:EnumValue {name: 'INTEGER_OVERFLOW', type: 'MathError'})
+MATCH (ev4:EnumValue {name: 'INTEGER_UNDERF', type: 'MathError'})
+CREATE (e)-[:CONTAINS]->(ev1)
+CREATE (e)-[:CONTAINS]->(ev2)
+CREATE (e)-[:CONTAINS]->(ev3)
+CREATE (e)-[:CONTAINS]->(ev4)
+
+CREATE (c:Contract {id: '0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a'})
+
+CREATE (context:Contract {name: 'Context'})
+CREATE (constructor:Function {name: 'constructor'})
+CREATE (msgSender:Function {name: '_msgSender'})
+
+CREATE (llm:LLM_Insights {insights: 'Audit conducted on the smart contract'})
+
+WITH c, context, constructor, msgSender, llm
+
+MATCH (c)
+CREATE (c)-[:DEFINES]->(context),
+       (c)-[:DEFINES]->(constructor),
+       (c)-[:DEFINES]->(msgSender),
+       (c)-[:HAS_INSIGHT]->(llm)
+
+CREATE (c:Contract {id: '0x0263e1dcfcaaad8fd4e840fe4b22854485a561f0'})
+
+CREATE (llm:LLM_Insights)
+SET llm.insights = "LLM audit observations and insights"
+
+WITH c, llm
+CREATE (entity:Entity {name: 'Address', type: 'Library'})
+CREATE (function:Function {name: 'isContract', visibility: 'internal', view: true, returns: 'bool'})
+
+CREATE (c)-[:HAS_INSIGHT]->(llm)
+CREATE (c)-[:DEFINES]->(entity)
+CREATE (entity)-[:CONTAINS]->(function)
+
+CREATE (:Contract {id: '0x0319a976c8dea5d31d1cf36eaffd8bec14957179'})
+
+CREATE (:LLM_Insights {
+    insights: 'Audit revealed potential vulnerabilities in the smart contract code.',
+    observations: 'The struct UserInfo lacks proper data validation and access control measures.'
+})
+
+WITH 1 as dummy
+
+CREATE (:Variable {
+    name: 'amount',
+    type: 'uint256',
+    inStruct: 'UserInfo'
+})
+
+CREATE (:Variable {
+    name: 'r',
+    type: 'uint256',
+    inStruct: 'UserInfo'
+})
+
+WITH 1 as dummy
+
+CREATE (:Struct {
+    name: 'UserInfo',
+    variables: ['amount', 'r']
+})
+
+MATCH (c:Contract {id: '0x0319a976c8dea5d31d1cf36eaffd8bec14957179'})
+MATCH (s:Struct {name: 'UserInfo'})
+CREATE (c)-[:DEFINES]->(s)
+
+MATCH (s:Struct {name: 'UserInfo'})
+MATCH (v:Variable {name: 'amount'})
+CREATE (s)-[:HAS_VARIABLE]->(v)
+
+MATCH (s:Struct {name: 'UserInfo'})
+MATCH (v:Variable {name: 'r'})
+CREATE (s)-[:HAS_VARIABLE]->(v)
+
+MATCH (c:Contract {id: '0x0319a976c8dea5d31d1cf36eaffd8bec14957179'})
+MATCH (llm:LLM_Insights)
+CREATE (c)-[:HAS_INSIGHT]->(llm)
+
+CREATE (c:Contract {id: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'})
+WITH c
+CREATE (i:LLM_Insights)
+SET i.insights = "Audit insights and observations"
+
+CREATE (interface:Variable {name: 'IERC20', type: 'interface'})
+CREATE (function:Function {name: 'balanceOf', visibility: 'external', returnType: 'view'})
+CREATE (variable:Variable {name: 'account', type: 'address'})
+
+WITH c, i, interface, function, variable
+CREATE (c)-[:HAS_INSIGHT]->(i)
+CREATE (c)-[:DEFINES]->(interface)
+CREATE (interface)-[:DEFINES]->(function)
+CREATE (function)-[:REFERENCES]->(variable)
+
+CREATE (:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+
+CREATE (:LLM_Insights {insights: 'Audit conducted on the smart contract'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+CREATE (:Library {name: 'BokkyPooBahsDateTimeLibrary'})
+
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (c)-[:USES]->(:Library)
+
+CREATE (:Contract {id: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+
+CREATE (:LLM_Insights {insights: 'Audit findings and observations'})
+
+WITH 1 as dummy
+
+CREATE (:Variable {name: 'UserInfo', type: 'struct'})
+CREATE (:Variable {name: 'amount', type: 'uint256'})
+CREATE (:Variable {name: 'r', type: 'uint256'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (c)-[:DEFINES]->(:Variable {name: 'UserInfo', type: 'struct'})
+CREATE (c)-[:DEFINES]->(:Variable {name: 'amount', type: 'uint256'})
+CREATE (c)-[:DEFINES]->(:Variable {name: 'r', type: 'uint256'})
+
+CREATE (:Contract {id: '0x0114622386c1a00686e594c70682d7aa0f8afa29'})
+
+CREATE (:LLM_Insights {
+    insights: 'Audit findings and observations from LLM audit'
+})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0114622386c1a00686e594c70682d7aa0f8afa29'})
+MATCH (i:LLM_Insights)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (c:Contract {id: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'})
+
+CREATE (llm:LLM_Insights {insights: 'Audit conducted on the smart contract'})
+
+WITH c, llm
+
+CREATE (contractEntity:Contract {name: 'Initializable'})
+CREATE (boolVariable:Variable {name: 'init', type: 'bool', visibility: 'private'})
+
+CREATE (contractEntity)-[:HAS_INSIGHT]->(llm)
+CREATE (boolVariable)-[:DEFINED_IN]->(contractEntity)
+
+// Create central Contract node
+CREATE (c:Contract {id: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'})
+
+// Create relevant entity nodes
+CREATE (i:Interface {name: 'IERC20'})
+CREATE (f:Function {name: 'balanceOf', visibility: 'external', returnType: 'returns'})
+
+// Create LLM_Insights node
+CREATE (insights:LLM_Insights {summary: 'The smart contract defines an interface IERC20 with a function balanceOf that returns the balance of an account.'})
+
+// Connect nodes using relationships
+WITH c, i, f, insights
+MATCH (c)
+CREATE (c)-[:DEFINES]->(i),
+       (i)-[:HAS_FUNCTION]->(f),
+       (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+
+CREATE (:LLM_Insights {insights: "No insights available"})
+
+WITH 1 as dummy
+MATCH (c:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}), (i:LLM_Insights)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (:Contract {id: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+
+CREATE (:LLM_Insights {
+    insights: 'The smart contract defines a struct UserInfo with amount and r variables.'
+})
+
+WITH 1 as dummy
+
+CREATE (:Variable {
+    name: 'amount',
+    type: 'uint256'
+})
+
+CREATE (:Variable {
+    name: 'r',
+    type: 'uint256'
+})
+
+CREATE (:Struct {
+    name: 'UserInfo'
+})
+
+WITH dummy
+
+MATCH (c:Contract {id: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+MATCH (s:Struct {name: 'UserInfo'})
+CREATE (c)-[:DEFINES]->(s)
+
+MATCH (s)
+MATCH (v:Variable {name: 'amount'})
+CREATE (s)-[:HAS_VARIABLE]->(v)
+
+MATCH (s)
+MATCH (v:Variable {name: 'r'})
+CREATE (s)-[:HAS_VARIABLE]->(v)
+
+MATCH (c)
+MATCH (i:LLM_Insights)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (contract:Contract {id: '0x0114622386c1a00686e594c70682d7aa0f8afa29'})
+
+CREATE (library:Function {name: 'isContract', visibility: 'internal', type: 'view'})
+CREATE (variable:Variable {name: 'account'})
+CREATE (entity:Contract {name: 'Address'})
+
+CREATE (insights:LLM_Insights {summary: 'Audit summary and observations'})
+
+WITH contract, library, variable, entity, insights
+CREATE (contract)-[:DEFINES]->(library)
+CREATE (library)-[:REFERENCES]->(variable)
+CREATE (library)-[:CALLS]->(entity)
+CREATE (insights)-[:HAS_INSIGHT]->(contract)
+
+CREATE (:Contract {id: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary and insights'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'})
+CREATE (:Variable {name: 'initi', visibility: 'private'})
+CREATE (:Function {name: 'Initializable', visibility: 'public'})
+
+WITH dummy, c
+CREATE (c)-[:DEFINES]->(:Variable {name: 'initi', visibility: 'private'})
+CREATE (c)-[:DEFINES]->(:Function {name: 'Initializable', visibility: 'public'})
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights {insights: 'Audit summary and insights'})
+
+// Create central Contract node
+CREATE (c:Contract {id: '0x01b23286ff60a543ec29366ae8d6b6274ca20541'})
+
+// Create IERC20 interface node
+CREATE (i:Interface {name: 'IERC20'})
+
+// Create Function node for totalSupply function
+CREATE (f:Function {name: 'totalSupply', visibility: 'external', returnType: 'uint256'})
+
+// Create LLM_Insights node
+CREATE (l:LLM_Insights {summary: 'The contract defines an interface IERC20 with a totalSupply function.'})
+
+// Connect central Contract node to other nodes
+WITH c, i, f, l
+MATCH (c)
+CREATE (c)-[:DEFINES]->(i),
+       (i)-[:HAS_FUNCTION]->(f),
+       (c)-[:HAS_INSIGHT]->(l)
+
+CREATE (contract:Contract {id: '0x01b952402442630232f32d48380a557015b7c5ec'})
+
+CREATE (mathErrorEnum:Enum {name: 'MathError'})
+SET mathErrorEnum.values = ['NO_ERROR', 'DIVISION_BY_ZERO', 'INTEGER_OVERFLOW', 'INTEGER_UNDERF']
+
+CREATE (llmInsights:LLM_Insights)
+SET llmInsights.summary = 'The contract defines an enum MathError with possible error types.'
+
+WITH contract, mathErrorEnum, llmInsights
+
+MATCH (contract)
+CREATE (contract)-[:DEFINES]->(mathErrorEnum),
+(contract)-[:HAS_INSIGHT]->(llmInsights)
+
+CREATE (contract:Contract {id: '0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a'})
+
+CREATE (function:Function {name: '_msgSender'})
+CREATE (contract)-[:DEFINES]->(function)
+
+CREATE (contract)-[:HAS_INSIGHT]->(insights:LLM_Insights {summary: 'The contract defines a function _msgSender'})
+
+CREATE (contract:Contract {id: '0x0263e1dcfcaaad8fd4e840fe4b22854485a561f0'})
+
+CREATE (library:Function {name: 'isContract', visibility: 'internal', type: 'view'})
+CREATE (library)-[:BELONGS_TO]->(contract)
+
+CREATE (library)-[:HAS_INSIGHT]->(insights:LLM_Insights {summary: 'The function isContract is defined in the Address library'})
+
+CREATE (:Contract {id: '0x0319a976c8dea5d31d1cf36eaffd8bec14957179'})
+
+CREATE (:Variable {name: 'UserInfo', type: 'struct'})
+CREATE (:Variable {name: 'amount', type: 'uint256'})
+CREATE (:Variable {name: 'r', type: 'uint256'})
+
+CREATE (:LLM_Insights {summary: 'The contract defines a struct UserInfo with two uint256 variables: amount and r'})
+
+WITH *
+MATCH (c:Contract {id: '0x0319a976c8dea5d31d1cf36eaffd8bec14957179'})
+CREATE (c)-[:DEFINES]->(:Variable {name: 'UserInfo', type: 'struct'})
+CREATE (c)-[:DEFINES]->(:Variable {name: 'amount', type: 'uint256'})
+CREATE (c)-[:DEFINES]->(:Variable {name: 'r', type: 'uint256'})
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+CREATE (contract:Contract {id: '0x033d95b10e9d67f93bf71350c6e9c85f460e55de'})
+
+CREATE (library:Function {name: 'isContract', visibility: 'internal', type: 'view'})
+CREATE (library)-[:BELONGS_TO]->(contract)
+
+CREATE (library)-[:DEFINED_IN]->(contract)
+
+CREATE (insights:LLM_Insights {summary: 'The smart contract contains a library function named isContract'})
+
+CREATE (:Contract {id: '0x04775962e613fab025120992e4eed7eed3ba87f2'})
+
+CREATE (:Function {name: '_msgSender', visibility: 'internal', returnType: 'view', virtual: true})
+
+CREATE (:LLM_Insights {summary: 'The contract contains an abstract function _msgSender with internal visibility and virtual modifier.'})
+
+WITH *
+MATCH (c:Contract {id: '0x04775962e613fab025120992e4eed7eed3ba87f2'})
+MATCH (f:Function {name: '_msgSender'})
+MATCH (i:LLM_Insights {summary: 'The contract contains an abstract function _msgSender with internal visibility and virtual modifier.'})
+
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (:Contract {id: '0x04a0c4c9774a56b8572034ce5df119b40fbd6919'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary on the smart contract'})
+
+WITH 1 as dummy
+
+CREATE (:Role {name: 'Roles'})
+CREATE (:Struct {name: 'Role'})
+CREATE (:Function {name: 'add'})
+
+MATCH (contract:Contract {id: '0x04a0c4c9774a56b8572034ce5df119b40fbd6919'})
+MATCH (role:Role {name: 'Roles'}), (struct:Struct {name: 'Role'}), (func:Function {name: 'add'}), (insights:LLM_Insights {insights: 'Audit summary on the smart contract'})
+
+CREATE (contract)-[:HAS_INSIGHT]->(insights)
+CREATE (contract)-[:DEFINES]->(role)
+CREATE (role)-[:DEFINES]->(struct)
+CREATE (role)-[:CALLS]->(func)
+
+CREATE (c:Contract {id: '0x0518a3c95f777b585dde38814331077c325565b1'})
+
+CREATE (context:Function {name: 'constructor', visibility: 'internal'})
+CREATE (msgSender:Function {name: '_msgSender', visibility: 'internal'})
+
+CREATE (insights:LLM_Insights {summary: 'Audit summary on the Context contract'})
+
+WITH c, context, msgSender, insights
+
+MATCH (c)
+CREATE (c)-[:DEFINES]->(context),
+       (c)-[:DEFINES]->(msgSender),
+       (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (c:Contract {id: '0x053889176621886e8ca98F349C1DEeB3612D2960'})
+
+CREATE (llm:LLM_Insights {insights: 'Audit summary on the Timelock contract'})
+
+WITH c, llm
+
+CREATE (timelock:Contract {name: 'Timelock'})
+CREATE (safemath:Contract {name: 'SafeMath'})
+CREATE (newadmin:Function {name: 'NewAdmin', eventType: 'event'})
+
+WITH c, llm, timelock, safemath, newadmin
+
+CREATE (timelock)-[:DEFINES]->(newadmin)
+CREATE (timelock)-[:USES]->(safemath)
+CREATE (newadmin)-[:EMITS]->(c)
+CREATE (llm)-[:HAS_INSIGHT]->(timelock)
+
+CREATE (c:Contract {id: '0x05b5db99f390aba70b444d394be25f6074d7ac5a'})
+
+CREATE (i:LLM_Insights)
+SET i.insights = "The contract defines an interface IOwnershipTransferrable with a function transferOwnership(address owner)"
+
+WITH c, i
+CREATE (interface:Function {name: 'transferOwnership', type: 'function'})
+CREATE (interface)-[:DEFINED_BY]->(c)
+CREATE (interface)-[:PART_OF]->(i)
+
+CREATE (:Contract {id: '0x05Fcc72CFb4150AbAE415c885f7a433Ff523296F'})
+
+CREATE (:Function {name: 'totalSupply', visibility: 'public', returnType: 'uint256'})
+
+CREATE (:LLM_Insights {summary: 'The ERC20Basic contract contains a function named totalSupply that returns a uint256 value'})
+
+WITH *
+MATCH (c:Contract {id: '0x05Fcc72CFb4150AbAE415c885f7a433Ff523296F'})
+MATCH (f:Function {name: 'totalSupply'})
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+CREATE (:Contract {id: '0x0689aa2234d06Ac0d04cdac874331d287aFA4B43'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract with ID 0x0689aa2234d06Ac0d04cdac874331d287aFA4B43 is an abstract contract named Proxy. It contains an event named ProxyImplementationUpdated.'
+})
+
+WITH 1 as dummy
+MATCH (c:Contract {id: '0x0689aa2234d06Ac0d04cdac874331d287aFA4B43'}), (i:LLM_Insights)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+// Create central Contract node
+CREATE (c:Contract {id: '0x06b7dbc16e445054386b01894eba31819b71d261'})
+
+// Create relevant entity nodes
+CREATE (tr:Function {name: 'receiveApproval'})
+CREATE (trInterface:Variable {name: '_from'})
+CREATE (uint256:Variable {name: '_'})
+
+// Create LLM_Insights node
+CREATE (insights:LLM_Insights {summary: 'Audit summary on the smart contract'})
+
+// Establish relationships
+WITH c, tr, trInterface, uint256, insights
+MATCH (c)
+CREATE (c)-[:DEFINES]->(tr),
+       (tr)-[:REFERENCES]->(trInterface),
+       (tr)-[:REFERENCES]->(uint256),
+       (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (c:Contract {id: '0x071911fA06AB97447D644eE4d5BCFdD63C1081a0'})
+
+CREATE (i:Variable {name: 'initialized', visibility: 'private'})
+CREATE (i2:Variable {name: 'initializing', visibility: 'private'})
+
+CREATE (llm:LLM_Insights {summary: 'The Initializable contract defines two private boolean variables: initialized and initializing.'})
+
+WITH c, i, i2, llm
+MATCH (c)
+CREATE (c)-[:DEFINES]->(i),
+       (c)-[:DEFINES]->(i2),
+       (c)-[:HAS_INSIGHT]->(llm)
+
+CREATE (:Contract {id: '0x0728e0023699186D5693Bb8e7e762B9972B3852E'})
+
+CREATE (:Function {name: 'add', visibility: 'external', returnType: 'uint256'})
+WITH *
+CREATE (:LLM_Insights {summary: 'The SafeMath library contains an add function for uint256 addition.'})
+
+MATCH (c:Contract {id: '0x0728e0023699186D5693Bb8e7e762B9972B3852E'})
+MATCH (f:Function {name: 'add'})
+MATCH (i:LLM_Insights {summary: 'The SafeMath library contains an add function for uint256 addition.'})
+CREATE (c)-[:USES]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (c:Contract {id: '0x088e1CC70fc731FBEE06d1eA41890F481552Bd99'})
+
+CREATE (l:LLM_Insights)
+SET l.insights = "The contract contains a library named Addresses with an internal view function isContract(address account)"
+
+WITH c, l
+
+CREATE (lib:Library)
+SET lib.name = "Addresses"
+
+CREATE (func:Function)
+SET func.name = "isContract"
+SET func.visibility = "internal"
+SET func.view = true
+
+CREATE (var:Variable)
+SET var.name = "account"
+
+WITH c, l, lib, func, var
+
+MATCH (c)
+CREATE (c)-[:HAS_INSIGHT]->(l)
+CREATE (c)-[:USES_LIBRARY]->(lib)
+CREATE (lib)-[:CONTAINS_FUNCTION]->(func)
+CREATE (func)-[:USES_VARIABLE]->(var)
+
+CREATE (:Contract {id: '0x089f0be0354f47d005e3871299cddfdfffdbe5e6'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary on the smart contract'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x089f0be0354f47d005e3871299cddfdfffdbe5e6'})
+CREATE (:Interface {name: 'ERC20'})
+
+MATCH (c)
+CREATE (:Function {name: 'approve', interface: 'ERC20'})
+
+MATCH (c)
+CREATE (:Variable {name: 'address'})
+
+MATCH (c)
+CREATE (:Variable {name: 'dummy'})
+
+CREATE (contract:Contract {id: '0x08ca538F87668521472e805b4642681ee297ee2b'})
+
+CREATE (event:Event {name: 'LogSetAuthor'})
+
+CREATE (llmInsights:LLM_Insights {summary: 'The contract DSAuthEvents defines an event LogSetAuthor.'})
+
+WITH contract, event, llmInsights
+
+MATCH (contract)
+CREATE (contract)-[:DEFINES]->(event),
+       (contract)-[:HAS_INSIGHT]->(llmInsights)
+
+CREATE (c:Contract {id: '0x091d57812a7D26405Da9b74C85d23A5a24d63f83'})
+
+CREATE (contract:Contract {name: 'AufStaking2'})
+CREATE (variable:Variable {name: 'name', type: 'string', visibility: 'public'})
+CREATE (variable2:Variable {name: 'p', type: 'address'})
+
+CREATE (insights:LLM_Insights {summary: 'Audit summary on AufStaking2 contract'})
+
+WITH c, contract, variable, variable2, insights
+
+MATCH (c)
+CREATE (contract)-[:REFERENCES]->(c)
+CREATE (variable)-[:BELONGS_TO]->(contract)
+CREATE (variable2)-[:BELONGS_TO]->(contract)
+CREATE (insights)-[:HAS_INSIGHT]->(c)
+
+CREATE (c:Contract {id: '0x099540ceA8919D103ba1954AF970B9753D9f0Bf1'})
+
+CREATE (llm:LLM_Insights)
+SET llm.insights = "The ERC1132 contract defines a mapping 'lockReason' that associates addresses with arrays of bytes32 values."
+SET llm.observations = "Further analysis of the contract functions and interactions is required."
+
+WITH c, llm
+
+CREATE (mapping:Variable)
+SET mapping.name = 'lockReason'
+SET mapping.type = 'mapping'
+SET mapping.dataType = 'bytes32[]'
+
+CREATE (address:Variable)
+SET address.name = 'address'
+SET address.dataType = 'address'
+
+CREATE (bytes32:Variable)
+SET bytes32.name = 'bytes32'
+SET bytes32.dataType = 'bytes32'
+
+CREATE (struct:Struct)
+SET struct.name = 'l'
+
+CREATE (function:Function)
+SET function.name = 'ERC1132'
+SET function.visibility = 'public'
+SET function.stateMutability = 'view'
+
+WITH c, llm, mapping, address, bytes32, struct, function
+
+MATCH (c)
+CREATE (c)-[:DEFINES]->(mapping),
+       (c)-[:DEFINES]->(address),
+       (c)-[:DEFINES]->(bytes32),
+       (c)-[:DEFINES]->(struct),
+       (c)-[:DEFINES]->(function),
+       (c)-[:HAS_INSIGHT]->(llm)
+
+CREATE (:Contract {id: '0x0A8347c3E5a363613b46dcBC5CE560A3bc9BC2FA'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary and insights'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0A8347c3E5a363613b46dcBC5CE560A3bc9BC2FA'})
+CREATE (:Function {name: 'DSAuthEvents', visibility: 'public'})-[:DEFINES]->(c)
+
+CREATE (c:Contract {id: '0x0a98ad316dfbcdaef91e382348a0c3639ec8f9d3'})
+
+CREATE (v:Variable {name: 'initialized', visibility: 'private'})
+CREATE (v2:Variable {name: 'initializing', visibility: 'private'})
+
+CREATE (llm:LLM_Insights {summary: 'The Initializable contract defines two private boolean variables: initialized and initializing.'})
+
+WITH c, llm
+MATCH (c)
+CREATE (c)-[:HAS_INSIGHT]->(llm)
+
+CREATE (c:Contract {id: '0x0aF10D116A5CF10cA8835A0d775e0b248114fAD0'})
+
+CREATE (f:Function {name: 'isValid', visibility: 'external', returnType: 'bool'})
+CREATE (i:Interface {name: 'IFactRegistry'})
+
+CREATE (llm:LLM_Insights {summary: 'The contract IFactRegistry defines an external view function named isValid that takes a bytes32 parameter and returns a boolean value.'})
+
+WITH c, f, i, llm
+MATCH (c)
+CREATE (c)-[:DEFINES]->(f)
+CREATE (i)-[:DEFINES]->(f)
+CREATE (llm)-[:HAS_INSIGHT]->(f)
+
+CREATE (contract:Contract {id: '0x0b07234f0440f322a6afc0707383391b16ce8dda'})
+
+CREATE (variable1:Variable {name: 'initialized', visibility: 'private'})
+CREATE (variable2:Variable {name: 'initializing', visibility: 'private'})
+
+CREATE (contractInsights:LLM_Insights {summary: 'The Initializable contract contains two private boolean variables: initialized and initializing'})
+
+WITH contract, variable1, variable2, contractInsights
+
+MATCH (contract)
+CREATE (contract)-[:HAS_VARIABLE]->(variable1),
+       (contract)-[:HAS_VARIABLE]->(variable2),
+       (contract)-[:HAS_INSIGHT]->(contractInsights)
+
+CREATE (c:Contract {id: '0x0B6842a729782FB28148080379c152f2781199cf'})
+
+CREATE (lib:Function {name: 'isContract', visibility: 'internal', type: 'view'})
+CREATE (lib)-[:BELONGS_TO]->(c)
+
+CREATE (lib)-[:DEFINED_IN]->(c)
+
+CREATE (insights:LLM_Insights {summary: 'The contract contains a library function named isContract'})
+
+CREATE (:Contract {id: '0x0cde9622b23ababfccef9755b5f7c9e759ef4820'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary on the CrowdProposal contract'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0cde9622b23ababfccef9755b5f7c9e759ef4820'})
+CREATE (:Variable {name: 'p'})
+CREATE (:Function {name: 'CrowdProposal'})
+
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (c)-[:DEFINES]->(:Variable {name: 'p'})
+CREATE (c)-[:DEFINES]->(:Function {name: 'CrowdProposal'})
+
+CREATE (:Contract {id: '0x0cfb151de2c34aceb532f43683e5b7bed62f298f'})
+
+CREATE (:LLM_Insights {
+    insights: 'Audit summary on the IAbacusOracle contract'
+})
+
+WITH *
+MATCH (c:Contract {id: '0x0cfb151de2c34aceb532f43683e5b7bed62f298f'})
+CREATE (:Variable {
+    name: 'callFee',
+    type: 'uint',
+    visibility: 'public'
+})-[:DEFINES]->(c)
+
+CREATE (c:Contract {id: '0x0d3303ffaf107cd732396570bf07b2dbd79b619f'})
+
+CREATE (f:Function {name: 'getColor', visibility: 'external', returnType: 'bytes32'})
+CREATE (c)-[:DEFINES]->(f)
+
+CREATE (llm:LLM_Insights {summary: 'The contract BColor defines a function getColor that returns a bytes32 value.'})
+
+WITH c, f, llm
+
+MATCH (c)
+CREATE (llm)-[:HAS_INSIGHT]->(c)
+CREATE (llm)-[:HAS_INSIGHT]->(f)
+
+CREATE (c:Contract {id: '0x0e110ad9d826d30073dc6a5d35efb857b9925b54'})
+
+CREATE (f:Function {name: 'isValid', visibility: 'external', stateMutability: 'view'})
+
+CREATE (c)-[:DEFINES]->(f)
+
+CREATE (insights:LLM_Insights {summary: 'The contract defines a function named isValid with external visibility and view state mutability.'})
+
+CREATE (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (:Contract {id: '0x0e49911C937357EAA5a56984483b4B8918D0493b'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract DSAuthEvents defines an event LogSetAuthori.'
+})
+
+WITH *
+
+CREATE (:Contract {name: 'DSAuthEvents', type: 'Contract'})
+
+CREATE (:Function {name: 'LogSetAuthori', type: 'Event'})
+
+MATCH (c:Contract {id: '0x0e49911C937357EAA5a56984483b4B8918D0493b'})
+MATCH (f:Function {name: 'LogSetAuthori'})
+
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+CREATE (contract:Contract {id: '0x0e68432827674ad048b803d1ee289ae78b3917b9'})
+
+CREATE (abacusOracle:Contract {name: 'IAbacusOracle'})
+CREATE (variable:Variable {name: 'callFee', type: 'uint'})
+
+CREATE (llmInsights:LLM_Insights {summary: 'The contract IAbacusOracle defines a public uint variable callFee.'})
+
+WITH contract, abacusOracle, variable, llmInsights
+
+MATCH (contract)
+MATCH (abacusOracle)
+CREATE (abacusOracle)-[:DEFINES]->(variable)
+
+WITH contract, llmInsights
+CREATE (contract)-[:HAS_INSIGHT]->(llmInsights)
+
+CREATE (c:Contract {id: '0x0f6d3785a42a1d62b17ce40a0d5159b17b97cba7'})
+
+CREATE (i:LLM_Insights)
+SET i.insights = "The contract defines an interface ERC20 with function approve(address)"
+
+WITH c, i
+
+CREATE (interface:Contract)
+SET interface.name = 'ERC20'
+
+CREATE (function:Function)
+SET function.name = 'approve'
+MATCH (c:Contract {id: '0x0f6d3785a42a1d62b17ce40a0d5159b17b97cba7'})
+MATCH (interface:Contract {name: 'ERC20'})
+MATCH (function:Function {name: 'approve'})
+
+CREATE (c)-[:DEFINES]->(interface)
+CREATE (interface)-[:DEFINES]->(function)
+CREATE (i)-[:HAS_INSIGHT]->(c)
+
+CREATE (:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'})
+
+CREATE (:LLM_Insights {
+    insights: "The contract defines two events: FeeRateEvent and LiquidationLi."
+})
+
+WITH *
+
+MATCH (c:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'})
+CREATE (:Interface {name: 'IDparam'})
+
+CREATE (:Event {name: 'FeeRateEvent'})
+CREATE (:Event {name: 'LiquidationLi'})
+
+CREATE (:Function {name: 'FeeRateEvent', type: 'event'})
+CREATE (:Function {name: 'LiquidationLi', type: 'event'})
+
+WITH *
+
+MATCH (c:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'}),
+      (i:Interface {name: 'IDparam'}),
+      (e1:Event {name: 'FeeRateEvent'}),
+      (e2:Event {name: 'LiquidationLi'}),
+      (f1:Function {name: 'FeeRateEvent'}),
+      (f2:Function {name: 'LiquidationLi'})
+CREATE (c)-[:DEFINES]->(i)
+CREATE (c)-[:DEFINES]->(e1)
+CREATE (c)-[:DEFINES]->(e2)
+CREATE (c)-[:DEFINES]->(f1)
+CREATE (c)-[:DEFINES]->(f2)
+
+CREATE (c:Contract {id: '0x0f93c452039a092206bf2f9302a3664b8b1c5072'})
+
+CREATE (llm:LLM_Insights)
+SET llm.summary = "The smart contract contains a library named Address with a function isContract that checks if the given address is a contract."
+SET llm.observations = "The contract ID is 0x0f93c452039a092206bf2f9302a3664b8b1c5072."
+
+WITH c, llm
+
+CREATE (lib:Library {name: 'Address'})
+CREATE (func:Function {name: 'isContract', visibility: 'internal', returnType: 'bool', view: true})
+CREATE (var:Variable {name: 'account', type: 'address', visibility: 'internal'})
+
+WITH c, llm, lib, func, var
+
+CREATE (c)-[:HAS_INSIGHT]->(llm)
+CREATE (c)-[:USES_LIBRARY]->(lib)
+CREATE (lib)-[:CONTAINS_FUNCTION]->(func)
+CREATE (func)-[:HAS_VARIABLE]->(var)
+
+CREATE (:Contract {id: '0x0fDF94751F639cAb6c28d2dC339844bC6BE9530F'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract is an abstract contract with a Context function for _msgSender()'
+})
+
+WITH 1 as dummy
+
+MATCH (c:Contract)
+CREATE (:Function {
+    name: '_msgSender',
+    visibility: 'internal',
+    returnType: 'view',
+    isVirtual: 'true'
+})-[:DEFINES]->(c)
+
+RETURN dummy
+
+CREATE (c:Contract {id: '0x1149d772bce9a636d0d7535ec865f3c6c8ee3b5c'})
+
+CREATE (a:Contract {name: 'Address', type: 'Library'})
+CREATE (f:Function {name: 'isContract', visibility: 'external', stateMutability: 'pure'})
+
+CREATE (llm:LLM_Insights {summary: 'The smart contract contains a library named Address with a function isContract'})
+
+WITH c, a, f, llm
+MATCH (c)
+CREATE (a)-[:DEFINES]->(f),
+       (llm)-[:HAS_INSIGHT]->(a),
+       (llm)-[:HAS_INSIGHT]->(f),
+       (a)-[:REFERENCES]->(c)
+
+// Create central Contract node
+CREATE (c:Contract {id: '0x11613b1f840bb5a40f8866d857e24da126b79d73'})
+
+// Create other entity nodes
+CREATE (context:Function {name: 'Context', visibility: 'abstract'})
+CREATE (msgSender:Function {name: '_msgSender', visibility: 'internal', returnType: 'view', virtual: true})
+
+// Create LLM_Insights node
+CREATE (insights:LLM_Insights {summary: 'Audit summary on the smart contract'})
+
+// Establish relationships
+WITH c, context, msgSender, insights
+MATCH (c)
+CREATE (c)-[:DEFINES]->(context),
+       (c)-[:DEFINES]->(msgSender),
+       (insights)-[:HAS_INSIGHT]->(c)
+
+CREATE (c:Contract {id: '0x11633DE32c66e81284f411a28DF16163B2BA5470'})
+
+CREATE (lib:Function {name: 'isContract', visibility: 'internal', returnType: 'bool'})
+CREATE (var:Variable {name: 'account', dataType: 'address'})
+CREATE (lib)-[:DEFINES]->(var)
+
+CREATE (insights:LLM_Insights {summary: 'The smart contract contains a library function named isContract'})
+WITH c, insights, lib, var
+
+MATCH (c)
+CREATE (c)-[:HAS_INSIGHT]->(insights)
+CREATE (c)-[:CALLS]->(lib)
+
+CREATE (:Contract {id: '0x116b1db5e116b7b9b5e2cd2cb86a5e6703d270be'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract IAbacusOracle defines a public state variable callFe of type uint.'
+})
+
+WITH 1 as dummy
+MATCH (c:Contract {id: '0x116b1db5e116b7b9b5e2cd2cb86a5e6703d270be'})
+CREATE (:Variable {
+    name: 'callFe',
+    type: 'uint'
+})-[:DEFINES]->(c)
+
+CREATE (:Contract {id: '0x117d16a3d9ac6f63a9512460bbad93f3f55c5789'})
+
+CREATE (:Contract {name: 'EIP20Interface'})
+WITH 1 as dummy
+CREATE (:Function {name: 'balanceOf'})
+
+CREATE (:Variable {name: 'totalSupply'})
+
+CREATE (:LLM_Insights {summary: 'Audit summary on the EIP20Interface contract'})
+WITH 1 as dummy
+
+MATCH (contract:Contract {id: '0x117d16a3d9ac6f63a9512460bbad93f3f55c5789'})
+MATCH (function:Function {name: 'balanceOf'})
+MATCH (variable:Variable {name: 'totalSupply'})
+MATCH (insights:LLM_Insights {summary: 'Audit summary on the EIP20Interface contract'})
+
+CREATE (contract)-[:DEFINES]->(function)
+CREATE (contract)-[:REFERENCES]->(variable)
+CREATE (contract)-[:HAS_INSIGHT]->(insights)
+
+CREATE (:Contract {id: '0x11c26446b5ce3b895ef6a9a594cf9df6e8badbd7'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary on the smart contract'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x11c26446b5ce3b895ef6a9a594cf9df6e8badbd7'})
+CREATE (:Entity {name: 'ERC20', type: 'Interface'})
+CREATE (:Function {name: 'approve', visibility: 'external'})
+
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (c)-[:DEFINES]->(:Entity {name: 'ERC20', type: 'Interface'})
+CREATE (c)-[:CALLS]->(:Function {name: 'approve', visibility: 'external'})
+
+CREATE (:Contract {id: '0x11c7262CB638D51E596363243C82066F49110Ed9'})
+
+CREATE (:LLM_Insights {
+    insights: "The CarefulMath contract defines an enum MathError with a single value NO."
+})
+
+WITH *
+MATCH (c:Contract {id: '0x11c7262CB638D51E596363243C82066F49110Ed9'})
+CREATE (:Enum {name: 'MathError', value: 'NO'})
+CREATE (c)-[:DEFINES]->(:Enum)
+
+CREATE (contract:Contract {id: '0x11c937fD367D75465DC211c367684d8d4520E6f9'})
+
+CREATE (event:Function {name: 'LogSetAuthori', visibility: 'public'})
+CREATE (contract)-[:DEFINES]->(event)
+
+CREATE (insights:LLM_Insights {summary: 'The contract defines a function named LogSetAuthori'})
+
+CREATE (:Contract {id: '0x1232b1601419b8b9874683f680e793343f8cbda6'})
+
+CREATE (:Function {name: 'getColor', visibility: 'external', returnType: 'bytes32'})
+
+CREATE (:Contract {name: 'BColor'})
+
+CREATE (:LLM_Insights {summary: 'The contract BColor contains a function getColor that returns a bytes32 value.'})
+
+WITH *
+MATCH (c:Contract {id: '0x1232b1601419b8b9874683f680e793343f8cbda6'})
+MATCH (f:Function {name: 'getColor'})
+MATCH (c2:Contract {name: 'BColor'})
+MATCH (insights:LLM_Insights {summary: 'The contract BColor contains a function getColor that returns a bytes32 value.'})
+
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:REFERENCES]->(c2)
+CREATE (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (:Contract {id: '0x1248460fd7e9c7148f2c11e94e0524c3dcfa7219'})
+
+CREATE (:Function {name: 'isLiquidation', visibility: 'external', stateMutability: 'view'})
+
+CREATE (:LLM_Insights {summary: 'The smart contract defines an interface function named isLiquidation with external visibility and view state mutability.'})
+
+WITH *
+MATCH (c:Contract {id: '0x1248460fd7e9c7148f2c11e94e0524c3dcfa7219'})
+MATCH (f:Function {name: 'isLiquidation'})
+MATCH (i:LLM_Insights {summary: 'The smart contract defines an interface function named isLiquidation with external visibility and view state mutability.'})
+
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (:Contract {id: '0x132ab3156a97b321b547c7747c996b6b680762e8'})
+
+CREATE (:LLM_Insights {insights: 'The contract has a private boolean variable named initialized and another private boolean variable named initializing.'})
+
+WITH *
+MATCH (c:Contract {id: '0x132ab3156a97b321b547c7747c996b6b680762e8'})
+CREATE (:Variable {name: 'initialized', visibility: 'private'})-[:BELONGS_TO]->(c),
+       (:Variable {name: 'initializing', visibility: 'private'})-[:BELONGS_TO]->(c)
+
+CREATE (c:Contract {id: '0x1363729a0cd6ed9e983d9bd385c9ed3591053703'})
+
+CREATE (lib:Function {name: 'isContract', visibility: 'internal', type: 'view'})
+CREATE (var:Variable {name: 'account'})
+CREATE (ent:Entity {name: 'Address', type: 'library'})
+
+CREATE (insights:LLM_Insights {summary: 'The smart contract contains a library function named isContract in the Address library.'})
+
+WITH c, lib, var, ent, insights
+MATCH (c)
+CREATE (c)-[:HAS_INSIGHT]->(insights)
+CREATE (ent)-[:DEFINES]->(lib)
+CREATE (lib)-[:REFERENCES]->(var)
+
+CREATE (:Contract {id: '0x136d6f80bb3a853d151686bfed2c9309aea6ddec'})
+
+CREATE (:Function {name: 'getColor', visibility: 'external', returnType: 'bytes32'})
+
+CREATE (:LLM_Insights {summary: 'The contract BColor contains a single function getColor that returns a bytes32 value.'})
+
+WITH *
+MATCH (c:Contract {id: '0x136d6f80bb3a853d151686bfed2c9309aea6ddec'})
+MATCH (f:Function {name: 'getColor'})
+MATCH (i:LLM_Insights {summary: 'The contract BColor contains a single function getColor that returns a bytes32 value.'})
+
+CREATE (c)-[:HAS_FUNCTION]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (c:Contract {id: '0x13a1c4cead8552ea27c7adbd4d4af8b6ec1fd54f'})
+
+CREATE (p:ProtocolBalance)
+SET p.struct_name = 'ProtocolBalance'
+
+CREATE (lm:LLM_Insights)
+SET lm.summary = 'The smart contract defines a struct named ProtocolBalance.'
+SET lm.observations = 'The struct ProtocolBalance is defined with a member variable m of type ProtocolMetadata.'
+
+WITH c, p, lm
+
+MATCH (c)
+CREATE (p)-[:DEFINES]->(c)
+CREATE (lm)-[:HAS_INSIGHT]->(c)
+
+CREATE (c:Contract {id: '0x13B70f58f8e7Fce3811401fF65D2dF33AD5DC61D'})
+
+CREATE (safemath:Function {name: 'add'})
+CREATE (uint256:Variable {type: 'uint256'})
+
+CREATE (llm:LLM_Insights {summary: 'The SafeMath library function add(uint256 a, ...) is defined'})
+
+WITH c, safemath, uint256, llm
+
+MATCH (c)
+CREATE (c)-[:DEFINES]->(safemath),
+       (safemath)-[:REFERENCES]->(uint256),
+       (llm)-[:HAS_INSIGHT]->(c)
+
+CREATE (:Contract {id: '0x13ea09ea5107af214a6fa279ac20c229ee188b28'})
+
+CREATE (:Contract {name: 'InterestRateModel'})
+WITH *
+CREATE (:Variable {name: 'isInterestRateModel', type: 'bool', visibility: 'public', constant: true})
+
+CREATE (:LLM_Insights {summary: 'The InterestRateModel contract defines a constant boolean variable isInterestRateModel'})
+
+MATCH (c:Contract {id: '0x13ea09ea5107af214a6fa279ac20c229ee188b28'})
+MATCH (v:Variable {name: 'isInterestRateModel'})
+MATCH (i:LLM_Insights {summary: 'The InterestRateModel contract defines a constant boolean variable isInterestRateModel'})
+WITH c, v, i
+CREATE (c)-[:DEFINES]->(v),
+       (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (c:Contract {id: '0x1416946162b1c2c871a73b07e932d2fb6c932069'})
+
+CREATE (i:LLM_Insights)
+SET i.insights = "The contract with ID 0x1416946162b1c2c871a73b07e932d2fb6c932069 implements the IEnergiTokenProxy interface."
+
+WITH c, i
+
+CREATE (ie:Interface {name: 'IEnergiTokenProxy'})
+CREATE (f:Function {name: 'proxyOwner', visibility: 'external', stateMutability: 'view'})
+
+WITH c, i, ie, f
+
+CREATE (c)-[:IMPLEMENTS]->(ie)
+CREATE (ie)-[:DECLARES]->(f)
+CREATE (f)-[:BELONGS_TO]->(ie)
+CREATE (f)-[:HAS_INSIGHT]->(i)
+
+CREATE (:Contract {id: '0x141e20e1b4D068115c9cd03CDe58a4b311ce7c92'})
+
+CREATE (:LLM_Insights {
+    insights: "Audit summary on the DSAuthEvents contract"
+})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x141e20e1b4D068115c9cd03CDe58a4b311ce7c92'})
+CREATE (:Function {name: 'LogSetAuthori'})
+CREATE (:Event {name: 'LogSetAuthori'})
+
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (c)-[:DEFINES]->(:Function {name: 'LogSetAuthori'})
+CREATE (c)-[:DEFINES]->(:Event {name: 'LogSetAuthori'})
+
+CREATE (:Contract {id: '0x1428bc4dd4c1fd651e8a62ff393aa3c8a832f56f'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract defines an interface IERC20 with a function totalSupply() that returns a uint256'
+})
+
+WITH 1 as dummy
+
+MATCH (contract:Contract {id: '0x1428bc4dd4c1fd651e8a62ff393aa3c8a832f56f'})
+CREATE (:Interface {name: 'IERC20'})
+CREATE (:Function {name: 'totalSupply', visibility: 'external', returnType: 'uint256'})
+
+CREATE (contract)-[:DEFINES]->(:Interface {name: 'IERC20'})
+CREATE (contract)-[:DEFINES]->(:Function {name: 'totalSupply', visibility: 'external', returnType: 'uint256'})
+CREATE (contract)-[:HAS_INSIGHT]->(:LLM_Insights {insights: 'The contract defines an interface IERC20 with a function totalSupply() that returns a uint256'})
+
+// Create central Contract node
+CREATE (c:Contract {id: '0x1457b6bEbFFbB4cd2B4442a063ECd945dC0d6b70'})
+
+// Create PotLike interface node
+CREATE (i:Interface {name: 'PotLike'})
+
+// Create Function node
+CREATE (f:Function {name: 'chi', visibility: 'external'})
+
+// Create LLM_Insights node
+CREATE (insights:LLM_Insights {summary: 'The smart contract defines an interface PotLike with an external function chi.'})
+
+// Connect nodes
+WITH c, i, f, insights
+MATCH (c)
+CREATE (c)-[:DEFINES]->(i),
+       (i)-[:HAS_FUNCTION]->(f),
+       (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (c:Contract {id: '0x14af8af6dccff858ab465f13506cb7b3561c024e'})
+
+CREATE (e:Contract {name: 'DSAuthEvents'})
+CREATE (i:LLM_Insights {summary: 'Audit summary on the DSAuthEvents contract'})
+
+WITH c, e, i
+MATCH (c)
+CREATE (e)-[:DEFINES]->(c),
+       (i)-[:HAS_INSIGHT]->(c)
+
+CREATE (c:Contract {id: '0x153f304dc5e528e3754c51710794306286c68111'})
+
+CREATE (i:LLM_Insights)
+SET i.insights = "The contract interacts with ERC20 interface."
+
+WITH c, i
+
+CREATE (e:Entity {name: 'ERC20', type: 'Interface'})
+
+CREATE (f:Function {name: 'approve', visibility: 'external'})
+CREATE (a:Variable {name: 'address'})
+
+WITH c, i, e, f, a
+
+MATCH (c)
+CREATE (c)-[:USES]->(e)
+CREATE (f)-[:BELONGS_TO]->(e)
+CREATE (a)-[:USED_IN]->(f)
+CREATE (i)-[:HAS_INSIGHT]->(c)
+
+CREATE (:Contract {id: '0x155ab266b9226525cfd5b1e7d8a80bab65b6b609'})
+
+CREATE (:LLM_Insights {
+    insights: "The contract is an abstract contract with a function _msgSender()"
+})
+
+WITH 1 as dummy
+
+CREATE (:Contract {name: 'Context', type: 'abstract'})
+CREATE (:Function {name: '_msgSender', visibility: 'internal', returnType: 'view', virtual: true})
+
+MATCH (c:Contract {id: '0x155ab266b9226525cfd5b1e7d8a80bab65b6b609'})
+MATCH (f:Function {name: '_msgSender', visibility: 'internal', returnType: 'view', virtual: true})
+MATCH (c2:Contract {name: 'Context', type: 'abstract'})
+MATCH (insights:LLM_Insights {insights: "The contract is an abstract contract with a function _msgSender()"})
+
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:CALLS]->(f)
+CREATE (c)-[:REFERENCES]->(c2)
+CREATE (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (c:Contract {id: '0x15601dB5A27e21207244075d676750B192206eB0'})
+
+CREATE (e:Contract {name: 'DSAuthEvents'})
+CREATE (i:LLM_Insights {summary: 'The DSAuthEvents contract defines event LogSetAuthori'})
+
+WITH c, e, i
+MATCH (c), (e)
+CREATE (c)-[:DEFINES]->(e)
+
+WITH c, i
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (contract:Contract {id: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'})
+
+CREATE (interface:Variable {name: 'IERC20', type: 'interface'})
+CREATE (function:Function {name: 'balanceOf', visibility: 'external', stateMutability: 'view'})
+
+CREATE (insights:LLM_Insights {summary: 'Audit summary on the smart contract'})
+
+WITH contract, interface, function, insights
+
+MATCH (contract)
+CREATE (contract)-[:DEFINES]->(interface),
+       (contract)-[:CALLS]->(function),
+       (contract)-[:HAS_INSIGHT]->(insights)
+
+CREATE (c:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+
+CREATE (llm:LLM_Insights)
+SET llm.insights = "The contract with ID 0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7 uses the BokkyPooBahsDateTimeLibrary library."
+
+WITH c, llm
+
+CREATE (library:Library {name: 'BokkyPooBahsDateTimeLibrary'})
+
+MATCH (c)
+CREATE (c)-[:USES_LIBRARY]->(library)
+
+MATCH (llm)
+CREATE (c)-[:HAS_INSIGHT]->(llm)
+
+CREATE (:Contract {id: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract defines a struct UserInfo with amount and r variables.'
+})
+
+WITH 1 as dummy
+
+CREATE (:Variable {
+    name: 'amount',
+    type: 'uint256'
+})
+
+CREATE (:Variable {
+    name: 'r',
+    type: 'uint256'
+})
+
+CREATE (:Struct {
+    name: 'UserInfo'
+})
+
+CREATE (:Function {
+    name: 'unknown_function'
+})
+
+MATCH (c:Contract {id: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+MATCH (v:Variable {name: 'amount'}), (s:Struct {name: 'UserInfo'}), (f:Function {name: 'unknown_function'})
+CREATE (c)-[:DEFINES]->(v)
+CREATE (s)-[:HAS_VARIABLE]->(v)
+CREATE (s)-[:HAS_VARIABLE]->(r)
+CREATE (f)-[:CALLS]->(s)
+
+MATCH (c)
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+CREATE (c:Contract {id: '0x0114622386c1a00686e594c70682d7aa0f8afa29'})
+
+CREATE (a:Function {name: 'isContract', visibility: 'internal', returnType: 'bool'})
+CREATE (v:Variable {name: 'account', type: 'address'})
+CREATE (l:Library {name: 'Address'})
+
+CREATE (i:LLM_Insights {summary: 'The smart contract contains a library function named isContract to check if an address is a contract.'})
+
+WITH c, a, v, l, i
+MATCH (c)
+CREATE (l)-[:DEFINES]->(a),
+       (a)-[:REFERENCES]->(v),
+       (a)-[:CALLS]->(l),
+       (i)-[:HAS_INSIGHT]->(l)
+
+CREATE (:Contract {id: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary on the Initializable contract'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'})
+CREATE (:Contract {name: 'Initializable'})
+CREATE (:Variable {name: 'initi', visibility: 'private'})
+
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (c)-[:DEFINES]->(:Contract {name: 'Initializable'})
+CREATE (c)-[:DEFINES]->(:Variable {name: 'initi', visibility: 'private'})
+
+CREATE (:Contract {id: '0x01b23286ff60a543ec29366ae8d6b6274ca20541'})
+
+CREATE (:Function {name: 'totalSupply', visibility: 'external', returnType: 'uint256'})
+
+CREATE (:LLM_Insights {summary: 'The contract contains a function named totalSupply'})
+
+WITH *
+MATCH (c:Contract {id: '0x01b23286ff60a543ec29366ae8d6b6274ca20541'})
+MATCH (f:Function {name: 'totalSupply'})
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+// Create central Contract node
+CREATE (c:Contract {id: '0x01b952402442630232f32d48380a557015b7c5ec'})
+
+// Create MathError enum nodes
+CREATE (m1:Enum {name: 'MathError', value: 'NO_ERROR'})
+CREATE (m2:Enum {name: 'MathError', value: 'DIVISION_BY_ZERO'})
+CREATE (m3:Enum {name: 'MathError', value: 'INTEGER_OVERFLOW'})
+CREATE (m4:Enum {name: 'MathError', value: 'INTEGER_UNDERF'})
+
+// Create LLM_Insights node
+CREATE (i:LLM_Insights {insights: 'Audit summary on the MathError enum'})
+
+// Match central Contract node and MathError enum nodes
+WITH c, m1, m2, m3, m4, i
+MATCH (c)
+WITH c, i
+MATCH (m1), (m2), (m3), (m4)
+// Create relationships
+CREATE (c)-[:HAS_ENUM]->(m1)
+CREATE (c)-[:HAS_ENUM]->(m2)
+CREATE (c)-[:HAS_ENUM]->(m3)
+CREATE (c)-[:HAS_ENUM]->(m4)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (c:Contract {id: '0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a'})
+
+CREATE (context:Function {name: 'constructor', visibility: 'internal'})
+CREATE (msgSender:Function {name: '_msgSender', visibility: 'internal'})
+
+CREATE (insights:LLM_Insights {summary: 'The contract Context contains two internal functions: constructor and _msgSender'})
+
+WITH c, context, msgSender, insights
+
+MATCH (c)
+CREATE (c)-[:DEFINES]->(context),
+       (c)-[:DEFINES]->(msgSender),
+       (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (contract:Contract {id: '0x0263e1dcfcaaad8fd4e840fe4b22854485a561f0'})
+
+CREATE (addressLib:Library {name: 'Address'})
+CREATE (function:Function {name: 'isContract', visibility: 'internal', state: 'view'})
+CREATE (variable:Variable {name: 'account'})
+
+CREATE (insights:LLM_Insights {summary: 'The smart contract contains a library named Address with an internal view function named isContract.'})
+
+WITH contract, addressLib, function, variable, insights
+MATCH (contract)
+CREATE (contract)-[:USES_LIBRARY]->(addressLib),
+       (function)-[:BELONGS_TO]->(addressLib),
+       (function)-[:DEFINED_IN]->(contract),
+       (variable)-[:USED_IN]->(function),
+       (insights)-[:HAS_INSIGHT]->(contract),
+       (insights)-[:HAS_INSIGHT]->(addressLib),
+       (insights)-[:HAS_INSIGHT]->(function),
+       (insights)-[:HAS_INSIGHT]->(variable)
+
+CREATE (c:Contract {id: '0x0319a976c8dea5d31d1cf36eaffd8bec14957179'})
+
+CREATE (u:Variable {name: 'UserInfo', type: 'struct'})
+CREATE (a:Variable {name: 'amount', type: 'uint256'})
+CREATE (r:Variable {name: 'r', type: 'uint256'})
+
+CREATE (llm:LLM_Insights {summary: 'The contract defines a struct UserInfo with amount and r variables.'})
+
+WITH c, u, a, r, llm
+
+MATCH (c)
+CREATE (c)-[:DEFINES]->(u),
+       (u)-[:HAS_MEMBER]->(a),
+       (u)-[:HAS_MEMBER]->(r),
+       (c)-[:HAS_INSIGHT]->(llm)
+
+CREATE (contract:Contract {id: '0x033d95b10e9d67f93bf71350c6e9c85f460e55de'})
+
+CREATE (addressLibrary:Function {name: 'isContract', visibility: 'internal', type: 'view'})
+CREATE (addressLibrary)-[:BELONGS_TO]->(contract)
+
+CREATE (addressLibrary)-[:DEFINED_IN]->(contract)
+
+CREATE (llmInsights:LLM_Insights {summary: 'The contract contains a library function named isContract'})
+
+// Create central Contract node
+CREATE (c:Contract {id: '0x04775962e613fab025120992e4eed7eed3ba87f2'})
+
+// Create other entity nodes
+CREATE (ctx:Function {name: '_msgSender', visibility: 'internal', returnType: 'view', virtual: true})
+CREATE (ctxCont:Contract {name: 'Context', solidityVersion: '0.6.12', abstract: true})
+
+// Create LLM_Insights node
+CREATE (insights:LLM_Insights {summary: 'The contract contains an abstract function _msgSender in the Context contract.'})
+
+// Match central Contract node and connect with other entities and LLM_Insights
+MATCH (c:Contract {id: '0x04775962e613fab025120992e4eed7eed3ba87f2'})
+WITH c
+MATCH (ctx:Function {name: '_msgSender'}), (ctxCont:Contract {name: 'Context'}), (insights:LLM_Insights {summary: 'The contract contains an abstract function _msgSender in the Context contract.'})
+CREATE (c)-[:DEFINES]->(ctx)
+CREATE (c)-[:CALLS]->(ctx)
+CREATE (ctx)-[:REFERENCES]->(ctxCont)
+CREATE (c)-[:HAS_INSIGHT]->(insights)
+
+
+
+CREATE (:Contract {id: '0x0518a3c95f777b585dde38814331077c325565b1'})
+
+CREATE (:Function {name: 'constructor', visibility: 'internal'})
+WITH *
+CREATE (:Function {name: '_msgSender', visibility: 'internal'})
+
+CREATE (:LLM_Insights {summary: 'Audit summary and insights'})
+
+MATCH (c:Contract)
+MATCH (f:Function)
+WHERE f.name IN ['constructor', '_msgSender']
+CREATE (c)-[:DEFINES]->(f)
+
+MATCH (c:Contract), (i:LLM_Insights)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (c:Contract {id: '0x053889176621886e8ca98F349C1DEeB3612D2960'})
+
+CREATE (llm:LLM_Insights)
+SET llm.summary = "The Timelock contract uses SafeMath library for uint256 operations."
+
+WITH c, llm
+
+CREATE (timelock:Contract {name: 'Timelock'})
+CREATE (safeMath:Contract {name: 'SafeMath'})
+CREATE (newAdmin:Function {name: 'NewAdmin', visibility: 'public', returnType: 'void'})
+CREATE (admin:Variable {name: 'admin', type: 'address'})
+
+WITH c, llm, timelock, safeMath, newAdmin, admin
+
+CREATE (c)-[:HAS_INSIGHT]->(llm)
+CREATE (c)-[:DEFINES]->(timelock)
+CREATE (c)-[:REFERENCES]->(safeMath)
+CREATE (timelock)-[:CALLS]->(safeMath)
+CREATE (timelock)-[:CALLS]->(newAdmin)
+CREATE (newAdmin)-[:REFERENCES]->(admin)
+
+CREATE (contract:Contract {id: '0x05b5db99f390aba70b444d394be25f6074d7ac5a'})
+
+CREATE (interface:Interface {name: 'IOwnershipTransferrable'})
+CREATE (function:Function {name: 'transferOwnership'})
+
+CREATE (llmInsights:LLM_Insights {summary: 'The smart contract defines an interface named IOwnershipTransferrable with a function transferOwnership(address owner).'})
+
+WITH contract, interface, function, llmInsights
+
+MATCH (contract)
+CREATE (contract)-[:DEFINES]->(interface),
+       (interface)-[:HAS_FUNCTION]->(function),
+       (llmInsights)-[:HAS_INSIGHT]->(contract)
+
+CREATE (contract:Contract {id: '0x05Fcc72CFb4150AbAE415c885f7a433Ff523296F'})
+WITH contract
+CREATE (erc20:Contract {name: 'ERC20Basic'})
+CREATE (totalSupplyFunc:Function {name: 'totalSupply', visibility: 'public', returnType: 'uint256'})
+CREATE (llmInsights:LLM_Insights {summary: 'Audit summary on the ERC20Basic contract'})
+WITH contract, erc20, totalSupplyFunc, llmInsights
+CREATE (contract)-[:HAS_INSIGHT]->(llmInsights)
+CREATE (contract)-[:DEFINES]->(erc20)
+CREATE (erc20)-[:CALLS]->(totalSupplyFunc)
+
+CREATE (c:Contract {id: '0x0689aa2234d06Ac0d04cdac874331d287aFA4B43'})
+
+CREATE (proxy:Contract {name: 'Proxy', type: 'abstract'})
+CREATE (event:Function {name: 'ProxyImplementationUpdated', type: 'event'})
+
+CREATE (insights:LLM_Insights {summary: 'Audit summary on the Proxy contract'})
+
+WITH c, proxy, event, insights
+
+MATCH (c)
+CREATE (c)-[:DEFINES]->(proxy),
+       (c)-[:DEFINES]->(event),
+       (c)-[:HAS_INSIGHT]->(insights)
+
+CREATE (c:Contract {id: '0x06b7dbc16e445054386b01894eba31819b71d261'})
+
+CREATE (i:LLM_Insights)
+SET i.insights = "Audit summary on the smart contract"
+
+WITH c, i
+
+CREATE (t:Contract {name: 'tokenRecipient', type: 'interface'})
+CREATE (f:Function {name: 'receiveApproval', inputs: ['_from', '_value']})
+
+CREATE (t)-[:DEFINES]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+CREATE (c)-[:CALLS]->(f)
+
+
+
+CREATE (c:Contract {id: '0x0728e0023699186D5693Bb8e7e762B9972B3852E'})
+
+CREATE (s:Function {name: 'add', visibility: 'external'})
+CREATE (v:Variable {name: 'a', type: 'uint256'})
+CREATE (l:Library {name: 'SafeMath'})
+
+CREATE (i:LLM_Insights {summary: 'Audit summary on the SafeMath library and the add function'})
+
+WITH c, s, v, l, i
+MATCH (c)
+CREATE (c)-[:CALLS]->(s)
+CREATE (s)-[:USES]->(l)
+CREATE (s)-[:USES]->(v)
+CREATE (i)-[:HAS_INSIGHT]->(s)
+
+CREATE (:Contract {id: '0x088e1CC70fc731FBEE06d1eA41890F481552Bd99'})
+
+CREATE (:Function {name: 'isContract', visibility: 'internal', returnType: 'bool'})
+CREATE (:Variable {name: 'account', type: 'address'})
+
+CREATE (:LLM_Insights {summary: 'The contract contains a library function named isContract to check if an address is a contract.'})
+
+WITH *
+MATCH (c:Contract {id: '0x088e1CC70fc731FBEE06d1eA41890F481552Bd99'})
+MATCH (f:Function {name: 'isContract'})
+MATCH (v:Variable {name: 'account'})
+MATCH (i:LLM_Insights {summary: 'The contract contains a library function named isContract to check if an address is a contract.'})
+
+CREATE (c)-[:DEFINES]->(f)
+CREATE (f)-[:REFERENCES]->(v)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (c:Contract {id: '0x089f0be0354f47d005e3871299cddfdfffdbe5e6'})
+
+CREATE (i:LLM_Insights)
+SET i.insights = "The contract defines an interface ERC20 with function approve(address)"
+
+WITH c, i
+
+CREATE (interface:Contract)
+SET interface.name = 'ERC20'
+
+CREATE (function:Function)
+SET function.name = 'approve'
+SET function.visibility = 'external'
+SET function.inputs = 'address'
+
+CREATE (variable:Variable)
+SET variable.name = 'ERC20'
+
+CREATE (:Contract {id: '0x08ca538F87668521472e805b4642681ee297ee2b'})
+
+CREATE (:LLM_Insights {insights: 'The contract DSAuthEvents defines an event LogSetAuthor.'})
+
+WITH *
+MATCH (c:Contract {id: '0x08ca538F87668521472e805b4642681ee297ee2b'})
+CREATE (:Event {name: 'LogSetAuthor'})
+CREATE (c)-[:DEFINES]->(:Event)
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+CREATE (c:Contract {id: '0x091d57812a7D26405Da9b74C85d23A5a24d63f83'})
+
+CREATE (llm:LLM_Insights {insights: "Audit summary on AufStaking2 contract"})
+
+WITH c, llm
+CREATE (contractEntity:Contract {name: 'AufStaking2'})
+CREATE (variableEntity:Variable {name: 'name', type: 'string', visibility: 'public'})
+CREATE (variableEntity2:Variable {name: 'p', type: 'address', visibility: 'private'})
+
+CREATE (contractEntity)-[:HAS_INSIGHT]->(llm)
+CREATE (contractEntity)-[:DEFINES]->(variableEntity)
+CREATE (contractEntity)-[:DEFINES]->(variableEntity2)
+
+
+
+CREATE (contract:Contract {id: '0x0A8347c3E5a363613b46dcBC5CE560A3bc9BC2FA'})
+
+CREATE (event:Variable {name: 'LogSetAuthori', type: 'event'})
+
+CREATE (contract)-[:DEFINES]->(event)
+
+CREATE (insights:LLM_Insights {summary: 'The contract DSAuthEvents defines an event LogSetAuthori'})
+
+WITH contract, insights, event
+
+MATCH (contract)
+CREATE (insights)-[:HAS_INSIGHT]->(contract)
+CREATE (insights)-[:HAS_INSIGHT]->(event)
+
+
+
+CREATE (c:Contract {id: '0x0aF10D116A5CF10cA8835A0d775e0b248114fAD0'})
+
+CREATE (f:Function {name: 'isValid', visibility: 'external', stateMutability: 'view'})
+CREATE (v:Variable {type: 'bytes32', name: 'fact'})
+CREATE (i:LLM_Insights {summary: 'The contract IFactRegistry defines a function isValid that takes a bytes32 parameter and is a view function.'})
+
+WITH c, f, v, i
+MATCH (c)
+CREATE (c)-[:DEFINES]->(f)
+CREATE (f)-[:HAS_PARAMETER]->(v)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (:Contract {id: '0x0b07234f0440f322a6afc0707383391b16ce8dda'})
+
+CREATE (:LLM_Insights {
+    insights: 'The Initializable contract has two private boolean variables: initialized and initializing.'
+})
+
+WITH *
+MATCH (c:Contract {id: '0x0b07234f0440f322a6afc0707383391b16ce8dda'})
+CREATE (:Variable {
+    name: 'initialized',
+    visibility: 'private'
+})-[:BELONGS_TO]->(c)
+
+WITH *
+MATCH (c:Contract {id: '0x0b07234f0440f322a6afc0707383391b16ce8dda'})
+CREATE (:Variable {
+    name: 'initializing',
+    visibility: 'private'
+})-[:BELONGS_TO]->(c)
+
+CREATE (contract:Contract {id: '0x0B6842a729782FB28148080379c152f2781199cf'})
+
+CREATE (library:Function {name: 'isContract', visibility: 'internal', type: 'view'})
+CREATE (variable:Variable {name: 'account'})
+CREATE (entity:Contract {name: 'Address'})
+CREATE (insights:LLM_Insights {summary: 'Audit summary on the smart contract'})
+
+WITH contract, library, variable, entity, insights
+MATCH (contract)
+CREATE (entity)-[:DEFINES]->(library),
+       (library)-[:REFERENCES]->(variable),
+       (insights)-[:HAS_INSIGHT]->(entity)
+
+CREATE (:Contract {id: '0x0cde9622b23ababfccef9755b5f7c9e759ef4820'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary on the CrowdProposal contract'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0cde9622b23ababfccef9755b5f7c9e759ef4820'})
+CREATE (:Variable {name: 'p'})
+CREATE (:Function {name: 'CrowdProposal'})
+
+CREATE (:Contract {id: 'address'})
+CREATE (:Contract {id: 'payable'})
+
+CREATE (:Function {name: 'pragma'})
+CREATE (:Function {name: 'solidity'})
+CREATE (:Function {name: 'experimental'})
+CREATE (:Function {name: 'ABIEncoderV2'})
+
+CREATE (:Dataset {label: 'variables'})
+CREATE (:Dataset {label: 'functions'})
+
+WITH dummy, c
+MATCH (v:Variable {name: 'p'}), (f:Function {name: 'CrowdProposal'})
+CREATE (c)-[:DEFINES]->(v)
+CREATE (c)-[:DEFINES]->(f)
+
+WITH dummy, c
+MATCH (c)-[:DEFINES]->(v:Variable {name: 'p'})
+CREATE (c)-[:REFERENCES]->(v)
+
+CREATE (contract:Contract {id: '0x0cfb151de2c34aceb532f43683e5b7bed62f298f'})
+
+CREATE (abacusOracle:Contract {name: 'IAbacusOracle'})
+CREATE (variable:Variable {name: 'callFee', type: 'uint'})
+
+CREATE (llmInsights:LLM_Insights {summary: 'Audit summary on the IAbacusOracle contract'})
+
+WITH contract, abacusOracle, variable, llmInsights
+
+MATCH (contract)
+MATCH (abacusOracle)
+MATCH (variable)
+MATCH (llmInsights)
+
+CREATE (contract)-[:DEFINES]->(abacusOracle)
+CREATE (abacusOracle)-[:DEFINES]->(variable)
+CREATE (llmInsights)-[:HAS_INSIGHT]->(abacusOracle)
+
+CREATE (:Contract {id: '0x0d3303ffaf107cd732396570bf07b2dbd79b619f'})
+
+CREATE (:Function {name: 'getColor', visibility: 'external', returnType: 'bytes32'})
+
+CREATE (:LLM_Insights {summary: 'The contract BColor contains a single function getColor that returns a bytes32 value.'})
+
+WITH *
+
+MATCH (c:Contract {id: '0x0d3303ffaf107cd732396570bf07b2dbd79b619f'})
+MATCH (f:Function {name: 'getColor'})
+MATCH (i:LLM_Insights {summary: 'The contract BColor contains a single function getColor that returns a bytes32 value.'})
+
+CREATE (c)-[:HAS_FUNCTION]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+CREATE (c:Contract {id: '0x0e110ad9d826d30073dc6a5d35efb857b9925b54'})
+
+CREATE (f:Function {name: 'isValid'})
+CREATE (v:Variable {name: 'fact'})
+CREATE (i:LLM_Insights {summary: 'The contract IFactRegistry contains a function named isValid that takes a bytes32 parameter and is view function.'})
+
+WITH c, f, v, i
+MATCH (c)
+CREATE (c)-[:HAS_FUNCTION]->(f)
+CREATE (f)-[:TAKES_PARAMETER]->(v)
+CREATE (f)-[:HAS_INSIGHT]->(i)
+
+CREATE (:Contract {id: '0x0e49911C937357EAA5a56984483b4B8918D0493b'})
+
+CREATE (:LLM_Insights {
+    insights: 'Audit summary on the DSAuthEvents contract: The contract defines an event LogSetAuthori.'
+})
+
+WITH *
+
+MATCH (c:Contract {id: '0x0e49911C937357EAA5a56984483b4B8918D0493b'})
+CREATE (:Event {name: 'LogSetAuthori'})
+CREATE (:Function {name: 'DSAuthEvents'})
+CREATE (:Variable {name: 'ABIEncoderV2'})
+
+CREATE (c)-[:DEFINES]->(:Event {name: 'LogSetAuthori'})
+CREATE (c)-[:DEFINES]->(:Function {name: 'DSAuthEvents'})
+CREATE (c)-[:DEFINES]->(:Variable {name: 'ABIEncoderV2'})
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+
+CREATE (:Contract {id: '0x0e68432827674ad048b803d1ee289ae78b3917b9'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract IAbacusOracle defines a public state variable callFe of type uint.'
+})
+
+WITH 1 as _
+MATCH (c:Contract {id: '0x0e68432827674ad048b803d1ee289ae78b3917b9'})
+CREATE (:Variable {
+    name: 'callFe',
+    type: 'uint'
+})-[:DEFINES]->(c)
+
+CREATE (c:Contract {id: '0x0f6d3785a42a1d62b17ce40a0d5159b17b97cba7'})
+
+CREATE (llm:LLM_Insights)
+SET llm.insights = "Audit summary on the smart contract"
+
+WITH c, llm
+
+CREATE (interface:Variable {name: 'ERC20', type: 'interface'})
+CREATE (function:Function {name: 'approve', visibility: 'external'})
+CREATE (argument:Variable {name: 'address', type: 'address'})
+
+WITH c, llm, interface, function, argument
+
+CREATE (c)-[:HAS_INSIGHT]->(llm)
+CREATE (c)-[:DEFINES]->(interface)
+CREATE (c)-[:DEFINES]->(function)
+CREATE (function)-[:CALLS]->(interface)
+CREATE (function)-[:REFERENCES]->(argument)
+
+CREATE (:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary on the smart contract'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'})
+CREATE (:Interface {name: 'IDparam'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'}), (i:Interface {name: 'IDparam'})
+CREATE (c)-[:IMPLEMENTS]->(i)
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'})
+CREATE (:Event {name: 'FeeRateEvent'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'}), (e:Event {name: 'FeeRateEvent'})
+CREATE (c)-[:EMITS]->(e)
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'})
+CREATE (:Event {name: 'LiquidationLi'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0f867d7aff21c601c046a1a6a21f355b1935749e'}), (e:Event {name: 'LiquidationLi'})
+CREATE (c)-[:EMITS]->(e)
+
+CREATE (contract:Contract {id: '0x0f93c452039a092206bf2f9302a3664b8b1c5072'})
+
+CREATE (library:Function {name: 'isContract', visibility: 'internal', type: 'view'})
+CREATE (variable:Variable {name: 'account'})
+CREATE (library)-[:DEFINES]->(variable)
+
+CREATE (insights:LLM_Insights {summary: 'The smart contract contains a library function named isContract'})
+WITH contract, library, variable, insights
+
+MATCH (contract)
+CREATE (contract)-[:CALLS]->(library)
+CREATE (library)-[:USES]->(variable)
+CREATE (insights)-[:HAS_INSIGHT]->(library)
+
+CREATE (:Contract {id: '0x0fDF94751F639cAb6c28d2dC339844bC6BE9530F'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary on the smart contract'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x0fDF94751F639cAb6c28d2dC339844bC6BE9530F'})
+CREATE (:Function {name: '_msgSender'})-[:DEFINES]->(c)
+
+CREATE (c:Contract {id: '0x1149d772bce9a636d0d7535ec865f3c6c8ee3b5c'})
+
+CREATE (a:Variable {name: 'Address'})
+CREATE (f:Function {name: 'isContract'})
+
+CREATE (llm:LLM_Insights {summary: 'The smart contract contains a library named Address with a function isContract'})
+
+WITH c, a, f, llm
+
+MATCH (c)
+CREATE (a)-[:DEFINES]->(c)
+CREATE (f)-[:DEFINES]->(c)
+CREATE (llm)-[:HAS_INSIGHT]->(c)
+
+CREATE (:Contract {id: '0x11613b1f840bb5a40f8866d857e24da126b79d73'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract contains an abstract contract Context with a function _msgSender()'
+})
+
+WITH *
+
+CREATE (:Contract {
+    label: 'Context',
+    abstract: true
+})
+
+CREATE (:Function {
+    name: '_msgSender',
+    visibility: 'internal',
+    returnType: 'view',
+    virtual: true
+})
+
+WITH *
+
+MATCH (c:Contract {id: '0x11613b1f840bb5a40f8866d857e24da126b79d73'})
+MATCH (context:Contract {label: 'Context'})
+MATCH (msgSender:Function {name: '_msgSender'})
+
+CREATE (c)-[:DEFINES]->(context)
+CREATE (context)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (context)-[:DEFINES]->(msgSender)
+
+CREATE (c:Contract {id: '0x11633DE32c66e81284f411a28DF16163B2BA5470'})
+
+CREATE (l:LLM_Insights)
+SET l.insights = "The contract contains a library named Address with a function isContract(address account) that is internal and view."
+
+WITH c, l
+
+CREATE (lib:Function)
+SET lib.name = "isContract",
+    lib.visibility = "internal",
+    lib.stateMutability = "view"
+
+CREATE (lib)-[:BELONGS_TO]->(c)
+CREATE (lib)-[:DEFINED_IN]->(l)
+
+CREATE (:Contract {id: '0x116b1db5e116b7b9b5e2cd2cb86a5e6703d270be'})
+
+CREATE (:LLM_Insights {
+    insights: 'The contract IAbacusOracle defines a public state variable callFe of type uint.'
+})
+
+WITH 1 as dummy
+MATCH (c:Contract {id: '0x116b1db5e116b7b9b5e2cd2cb86a5e6703d270be'})
+CREATE (:Variable {
+    name: 'callFe',
+    type: 'uint'
+})-[:DEFINES]->(c)
+
+CREATE (:Contract {id: '0x117d16a3d9ac6f63a9512460bbad93f3f55c5789'})
+
+CREATE (:Contract {name: 'EIP20Interface'})
+CREATE (:Function {name: 'balanceOf'})
+CREATE (:Variable {name: 'totalSupply'})
+
+CREATE (:LLM_Insights {summary: 'Audit summary on the EIP20Interface contract'})
+
+WITH *
+MATCH (c:Contract {id: '0x117d16a3d9ac6f63a9512460bbad93f3f55c5789'})
+CREATE (c)-[:DEFINES]->(:Function {name: 'balanceOf'})
+CREATE (c)-[:REFERENCES]->(:Variable {name: 'totalSupply'})
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights {summary: 'Audit summary on the EIP20Interface contract'})
+
+CREATE (:Contract {id: '0x11c26446b5ce3b895ef6a9a594cf9df6e8badbd7'})
+
+CREATE (:LLM_Insights {insights: 'Audit summary and insights'})
+
+WITH 1 as dummy
+
+MATCH (c:Contract {id: '0x11c26446b5ce3b895ef6a9a594cf9df6e8badbd7'})
+CREATE (:Entity {name: 'ERC20', type: 'Interface'})
+CREATE (:Function {name: 'approve', visibility: 'external'})
+
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (c)-[:DEFINES]->(:Entity {name: 'ERC20', type: 'Interface'})
+CREATE (c)-[:DEFINES]->(:Function {name: 'approve', visibility: 'external'})
+
+CREATE (:Contract {id: '0x11c7262CB638D51E596363243C82066F49110Ed9'})
+
+CREATE (:LLM_Insights {
+    insights: "The CarefulMath contract contains an enum MathError with a single value NO."
+})
+
+WITH *
+MATCH (c:Contract {id: '0x11c7262CB638D51E596363243C82066F49110Ed9'})
+CREATE (:Enum {name: 'MathError', value: 'NO'})
+CREATE (c)-[:HAS_INSIGHT]->(:LLM_Insights)
+CREATE (c)-[:DEFINES]->(:Enum)
+
+CREATE (c:Contract {id: '0x11c937fD367D75465DC211c367684d8d4520E6f9'})
+
+CREATE (e:LLM_Insights)
+SET e.insights = "The contract DSAuthEvents defines an event LogSetAuthori."
+
+WITH c, e
+
+CREATE (e1:Contract {name: 'DSAuthEvents'})
+CREATE (e2:Function {name: 'LogSetAuthori', type: 'event'})
+
+WITH c, e, e1, e2
+
+CREATE (e1)-[:DEFINES]->(e2)
+CREATE (e2)-[:BELONGS_TO]->(e1)
+CREATE (e2)-[:TRIGGERS]->(c)
+CREATE (e2)-[:HAS_INSIGHT]->(e)
+
+RETURN c, e, e1, e2
+
+CREATE (:Contract {id: '0x1232b1601419b8b9874683f680e793343f8cbda6'})
+
+CREATE (:Function {name: 'getColor', visibility: 'external', returnType: 'bytes32'})
+
+CREATE (:LLM_Insights {summary: 'The contract BColor contains a single function getColor() which returns a bytes32 value.'})
+
+WITH *
+MATCH (c:Contract {id: '0x1232b1601419b8b9874683f680e793343f8cbda6'})
+MATCH (f:Function {name: 'getColor'})
+MATCH (i:LLM_Insights {summary: 'The contract BColor contains a single function getColor() which returns a bytes32 value.'})
+
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(i)
+
+// Create a central Contract node
+CREATE (c:Contract {id: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'})
+
+// Create nodes for relevant entities: Contract, Function, ExternalContract
+CREATE (c)-[:DEFINES]->(f:Function {name: 'balanceOf', visibility: 'external', returnType: 'uint256'})
+CREATE (f)-[:REFERENCES]->(v:Variable {name: 'account', type: 'address'})
+CREATE (f)-[:CALLS]->(ec:ExternalContract {name: 'IERC20'})
+
+// Create LLM_Insights node
+CREATE (insights:LLM_Insights {summary: 'Audit summary on the smart contract'})
+
+// Use WITH clause to pass nodes and relationships
+WITH c, f, v, ec, insights
+
+// Match central Contract node and establish relationships
+MATCH (c)
+MATCH (c)-[:DEFINES]->(f)
+MATCH (f)-[:REFERENCES]->(v)
+MATCH (f)-[:CALLS]->(ec)
+MATCH (c)-[:HAS_INSIGHT]->(insights)MATCH (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create a central Contract node
+CREATE (c:Contract {id: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'})
+
+// Create nodes for relevant entities: Contract, Variable, Function
+CREATE (c:Contract {name: 'BokkyPooBahsDateTimeLibrary'})
+CREATE (v:Variable {name: 'uint'})
+CREATE (f:Function {name: 'BokkyPooBahsDateTimeLibrary', visibility: 'library'})
+
+// Create LLM_Insights node
+CREATE (i:LLM_Insights {summary: 'Audit summary on BokkyPooBahsDateTimeLibrary'})
+
+// Use WITH clause to pass created nodes to MATCH clause
+WITH c, v, f, i
+
+// Match central Contract node and establish relationships
+MATCH (c)
+CREATE (c)-[:HAS_VARIABLE]->(v)
+CREATE (c)-[:HAS_FUNCTION]->(f)
+CREATE (c)-[:HAS_INSIGHT]->(i)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_6'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_9'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_7'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create a central Contract node
+CREATE (c:Contract {id: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+
+// Create nodes for relevant entities: Variable (amount), Variable (r), Struct (UserInfo)
+CREATE (v1:Variable {name: 'amount', type: 'uint256'})
+CREATE (v2:Variable {name: 'r', type: 'uint256'})
+CREATE (s:Struct {name: 'UserInfo'})
+
+// Create an LLM_Insights node
+CREATE (i:LLM_Insights {summary: 'Audit summary and observations'})
+
+// Use WITH clause to pass nodes to the MATCH clause
+WITH c, v1, v2, s, i
+
+// Match the central Contract node and establish relationships with other entities
+MATCH (c)
+CREATE (c)-[:CONTAINS_VARIABLE]->(v1)
+CREATE (c)-[:CONTAINS_VARIABLE]->(v2)
+CREATE (c)-[:CONTAINS_STRUCT]->(s)
+CREATE (c)-[:HAS_INSIGHT]->(i)MATCH (c:Contract {address: '0x010c5322d78c88ca18282b0a072a8913648b3038'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create a central Contract node
+CREATE (c:Contract {id: '0x0114622386c1a00686e594c70682d7aa0f8afa29'})
+
+// Create nodes for relevant entities: Library, Function
+CREATE (lib:Library {name: 'Address'})
+CREATE (func:Function {name: 'isContract', visibility: 'internal', returnType: 'bool'})
+
+// Create an LLM_Insights node
+CREATE (insights:LLM_Insights {summary: 'Audit summary on the smart contract'})
+
+// Use WITH clause to pass created nodes to the MATCH clause
+WITH c, lib, func, insights
+
+// Establish relationships between nodes
+MATCH (c)
+CREATE (c)-[:USES_LIBRARY]->(lib),
+       (c)-[:HAS_INSIGHT]->(insights),
+       (func)-[:DEFINED_IN]->(lib)
+
+// Return the Cypher queries as a single stringMATCH (c:Contract {address: '0x0114622386c1a00686e594c70682d7aa0f8afa29'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+

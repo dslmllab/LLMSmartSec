@@ -1,0 +1,490 @@
+// Create the contract node
+CREATE (:Contract {name: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'})
+
+// Create the interface node
+CREATE (:Interface {name: 'IERC20'})
+
+// Create the function node
+CREATE (:Function {name: 'balanceOf', visibility: 'external', startLine: 2, endLine: 2})
+
+// Create the variable node
+CREATE (:Variable {name: 'account', type: 'address', scope: 'local'})
+
+// Create the basic block node
+CREATE (:BasicBlock {blockId: 1, startLine: 2, endLine: 2, code: 'function balanceOf(address account) external view returns'})
+
+// Create the control flow relationship
+MATCH (a:BasicBlock {blockId: 1}), (b:Function {name: 'balanceOf'})
+CREATE (a)-[:CALLS]->(b)
+
+// Create the variable usage relationship
+MATCH (a:BasicBlock {blockId: 1}), (b:Variable {name: 'account'})
+CREATE (a)-[:READS]->(b)MATCH (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create a BasicBlock node
+CREATE (bb:BasicBlock {blockId: 'BB1', startLine: 1, endLine: 5, code: 'pragma solidity 0.6.10;'})
+
+// Create a Function node
+CREATE (f:Function {name: 'myFunction', visibility: 'public', startLine: 6, endLine: 10})
+
+// Create a Variable node
+CREATE (v:Variable {name: 'myVar', type: 'uint', scope: 'local'})
+
+// Create a Vulnerability node
+CREATE (vuln:Vulnerability {name: 'Reentrancy', description: 'Allows for reentrancy attacks', severity: 'High', lineNumber: 8})
+
+// Create a NEXT relationship between two BasicBlock nodes
+MATCH (bb1:BasicBlock {blockId: 'BB1'}), (bb2:BasicBlock {blockId: 'BB2'})
+CREATE (bb1)-[:NEXT]->(bb2)
+
+// Create a CALLS relationship between a BasicBlock node and a Function node
+MATCH (bb:BasicBlock {blockId: 'BB1'}), (f:Function {name: 'myFunction'})
+CREATE (bb)-[:CALLS]->(f)
+
+// Create a READS relationship between a BasicBlock node and a Variable node
+MATCH (bb:BasicBlock {blockId: 'BB1'}), (v:Variable {name: 'myVar'})
+CREATE (bb)-[:READS]->(v)
+
+// Create a relationship between a BasicBlock node and a Vulnerability node
+MATCH (bb:BasicBlock {blockId: 'BB1'}), (vuln:Vulnerability {name: 'Reentrancy'})
+CREATE (bb)-[:HAS_VULNERABILITY]->(vuln)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_6'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_9'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_7'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B', name: 'IERC20', sourceCode: 'pragma solidity 0.5.4; interface IERC20 { function balanceOf(address account) external view returns'})
+
+CREATE (v:Vulnerability {name: 'Reentrancy', description: 'Allows for nested calls to external functions', severity: 'High', cweId: 'CWE-862', cveId: 'CVE-2016-1000339'})
+
+CREATE (cp:CodePattern {pattern: 'external call', description: 'External call in a contract function', vulnerability: 'Reentrancy'})
+
+CREATE (f:Function {name: 'balanceOf', visibility: 'external', vulnerability: 'None'})
+
+CREATE (var:Variable {name: 'account', type: 'address', vulnerability: 'None'})
+
+CREATE (ei:ExternalContract {name: 'IERC20', interaction: 'balanceOf'})
+
+CREATE (mt:MitigationTechnique {name: 'Check-effects-interaction pattern', description: 'Ensures that all internal work is done before external calls'})
+
+CREATE (fix:Fix {description: 'Update to latest solidity version', version: '0.8.0', fixType: 'Version update'})
+
+CREATE (rec:Recommendation {description: 'Avoid state changes after external calls', category: 'Coding Best Practices', priority: 'High'})
+
+CREATE (ins:LLM_Insights {summary: 'The contract uses an outdated version of Solidity and has potential reentrancy vulnerabilities'})
+
+WITH c, v, cp, f, var, ei, mt, fix, rec, ins
+
+MATCH (c), (v), (cp), (f), (var), (ei), (mt), (fix), (rec), (ins)
+
+CREATE (c)-[:HAS_VULNERABILITY]->(v)
+CREATE (cp)-[:INDICATES]->(v)
+CREATE (f)-[:DEFINED_IN]->(c)
+CREATE (var)-[:USED_IN]->(f)
+CREATE (c)-[:INTERACTS_WITH]->(ei)
+CREATE (mt)-[:MITIGATES]->(v)
+CREATE (fix)-[:FIXES]->(v)
+CREATE (rec)-[:RECOMMENDS]->(c)
+CREATE (c)-[:HAS_INSIGHT]->(ins)MATCH (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create Contract Node
+CREATE (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7', name: 'Contract1', sourceCode: 'pragma solidity 0.6.10; pragma experimental ABIEncoderV2; library BokkyPooBahsDateTimeLibrary { uint'})
+
+// Create Vulnerability Node
+CREATE (v:Vulnerability {name: 'Vulnerability1', description: 'Description1', severity: 'High', cweId: 'CWE-1', cveId: 'CVE-1'})
+
+// Create CodePattern Node
+CREATE (cp:CodePattern {pattern: 'Pattern1', description: 'Description1', vulnerability: 'Vulnerability1'})
+
+// Create Function Node
+CREATE (f:Function {name: 'Function1', visibility: 'Public', vulnerability: 'Vulnerability1'})
+
+// Create Variable Node
+CREATE (var:Variable {name: 'Variable1', type: 'uint', vulnerability: 'Vulnerability1'})
+
+// Create External Interaction Node
+CREATE (ei:ExternalContract {name: 'BokkyPooBahsDateTimeLibrary'})
+
+// Create MitigationTechnique Node
+CREATE (mt:MitigationTechnique {name: 'Technique1', description: 'Description1'})
+
+// Create Fix Node
+CREATE (fix:Fix {description: 'Fix1', version: '1.0', fixType: 'Patch'})
+
+// Create Recommendation Node
+CREATE (r:Recommendation {description: 'Recommendation1', category: 'Security', priority: 'High'})
+
+// Create LLM_Insights Node
+CREATE (llm:LLM_Insights {summary: 'Audit summary'})
+
+// Establish Relationships
+WITH c, v, cp, f, var, ei, mt, fix, r, llm
+CREATE (c)-[:HAS_VULNERABILITY]->(v),
+       (cp)-[:INDICATES]->(v),
+       (f)-[:DEFINED_IN]->(c),
+       (var)-[:USED_IN]->(f),
+       (c)-[:INTERACTS_WITH]->(ei),
+       (mt)-[:MITIGATES]->(v),
+       (fix)-[:FIXES]->(v),
+       (r)-[:RECOMMENDS]->(c),
+       (c)-[:HAS_INSIGHT]->(llm)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_6'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_9'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_7'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create Contract Node
+CREATE (c:Contract {address: '0x010c5322d78c88ca18282b0a072a8913648b3038', name: 'Contract1', sourceCode: 'pragma solidity 0.6.5; pragma experimental ABIEncoderV2; struct UserInfo { uint256 amount; uint256 r'})
+
+// Create Vulnerability Nodes
+CREATE (v1:Vulnerability {name: 'Reentrancy', description: 'Allows for nested calls to external functions', severity: 'High', cweId: 'CWE-862', cveId: 'CVE-2018-10299'})
+CREATE (v2:Vulnerability {name: 'Integer Overflow/Underflow', description: 'Can cause unexpected behavior due to the limited size of integer types', severity: 'Medium', cweId: 'CWE-190', cveId: 'CVE-2018-10299'})
+
+// Create Code Pattern Nodes
+CREATE (cp1:CodePattern {pattern: 'call.value()', description: 'Indicates potential reentrancy vulnerability', vulnerability: 'Reentrancy'})
+CREATE (cp2:CodePattern {pattern: '+/-', description: 'Indicates potential integer overflow/underflow vulnerability', vulnerability: 'Integer Overflow/Underflow'})
+
+// Create Function Nodes
+CREATE (f1:Function {name: 'function1', visibility: 'public', vulnerability: 'Reentrancy'})
+CREATE (f2:Function {name: 'function2', visibility: 'private', vulnerability: 'Integer Overflow/Underflow'})
+
+// Create Variable Nodes
+CREATE (v:Variable {name: 'amount', type: 'uint256', vulnerability: 'Integer Overflow/Underflow'})
+
+// Create External Interaction Nodes
+CREATE (e:ExternalContract {name: 'ExternalContract1'})
+
+// Create Mitigation Technique Nodes
+CREATE (mt1:MitigationTechnique {name: 'Use of mutex', description: 'Prevents reentrancy by locking the contract during the execution of sensitive code'})
+CREATE (mt2:MitigationTechnique {name: 'SafeMath library', description: 'Prevents integer overflow/underflow by using safe mathematical operations'})
+
+// Create Fixes Nodes
+CREATE (fx1:Fix {description: 'Patch to prevent reentrancy', version: '1.0', fixType: 'Code modification'})
+CREATE (fx2:Fix {description: 'Patch to prevent integer overflow/underflow', version: '1.0', fixType: 'Code modification'})
+
+// Create Recommendation Nodes
+CREATE (r1:Recommendation {description: 'Avoid using low level calls', category: 'Coding Best Practices', priority: 'High'})
+CREATE (r2:Recommendation {description: 'Use SafeMath library for arithmetic operations', category: 'Coding Best Practices', priority: 'High'})
+
+// Create LLM_Insights Node
+CREATE (i:LLM_Insights {auditSummary: 'The contract has potential reentrancy and integer overflow/underflow vulnerabilities'})
+
+// Establish Relationships
+WITH c, v1, v2, cp1, cp2, f1, f2, v, e, mt1, mt2, fx1, fx2, r1, r2, i
+CREATE (c)-[:HAS_VULNERABILITY]->(v1)
+CREATE (c)-[:HAS_VULNERABILITY]->(v2)
+CREATE (cp1)-[:INDICATES]->(v1)
+CREATE (cp2)-[:INDICATES]->(v2)
+CREATE (f1)-[:DEFINED_IN]->(c)
+CREATE (f2)-[:DEFINED_IN]->(c)
+CREATE (v)-[:USED_IN]->(f2)
+CREATE (c)-[:INTERACTS_WITH]->(e)
+CREATE (mt1)-[:MITIGATES]->(v1)
+CREATE (mt2)-[:MITIGATES]->(v2)
+CREATE (fx1)-[:FIXES]->(v1)
+CREATE (fx2)-[:FIXES]->(v2)
+CREATE (r1)-[:RECOMMENDS]->(c)
+CREATE (r2)-[:RECOMMENDS]->(c)
+CREATE (c)-[:HAS_INSIGHT]->(i)MATCH (c:Contract {address: '0x010c5322d78c88ca18282b0a072a8913648b3038'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x0114622386c1a00686e594c70682d7aa0f8afa29', name: 'Contract1', sourceCode: 'pragma solidity 0.6.6; library Address { function isContract(address account) internal view returns'})
+
+CREATE (v:Vulnerability {name: 'Vulnerability1', description: 'Description1', severity: 'High', cweId: 'CWE-1', cveId: 'CVE-1'})
+
+CREATE (c)-[:HAS_VULNERABILITY]->(v)
+
+CREATE (cp:CodePattern {pattern: 'Pattern1', description: 'Description1', vulnerability: 'Vulnerability1'})
+
+CREATE (cp)-[:INDICATES]->(v)
+
+CREATE (f:Function {name: 'isContract', visibility: 'internal', vulnerability: 'Vulnerability1'})
+
+CREATE (f)-[:DEFINED_IN]->(c)
+
+CREATE (v:Variable {name: 'account', type: 'address', vulnerability: 'Vulnerability1'})
+
+CREATE (v)-[:USED_IN]->(f)
+
+CREATE (f2:Function {name: 'Function2'})
+
+CREATE (f)-[:CALLS]->(f2)
+
+CREATE (v2:Variable {name: 'Variable2'})
+
+CREATE (f)-[:READS_FROM]->(v2)
+
+CREATE (ec:ExternalContract {name: 'Address'})
+
+CREATE (c)-[:INTERACTS_WITH]->(ec)
+
+CREATE (mt:MitigationTechnique {name: 'Technique1', description: 'Description1'})
+
+CREATE (mt)-[:MITIGATES]->(v)
+
+CREATE (fix:Fix {description: 'Fix1', version: '1.0', fixType: 'Patch'})
+
+CREATE (fix)-[:FIXES]->(v)
+
+CREATE (r:Recommendation {description: 'Recommendation1', category: 'Security', priority: 'High'})
+
+CREATE (r)-[:RECOMMENDS]->(c)
+
+CREATE (llm:LLM_Insights {summary: 'Summary1'})
+
+WITH c, llm
+MATCH (c)
+CREATE (c)-[:HAS_INSIGHT]->(llm)MATCH (c:Contract {address: '0x0114622386c1a00686e594c70682d7aa0f8afa29'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8', name: 'Initializable', sourceCode: 'pragma solidity 0.6.8; pragma experimental ABIEncoderV2; contract Initializable { bool private initi'})
+
+CREATE (v:Vulnerability {name: 'Reentrancy', description: 'Allows for nested calls to external contracts', severity: 'High', cweId: 'CWE-862', cveId: 'CVE-2016-1000339'})
+
+CREATE (cp:CodePattern {pattern: 'call.value()', description: 'Unsafe external call', vulnerability: 'Reentrancy'})
+
+CREATE (f:Function {name: 'withdraw', visibility: 'public', vulnerability: 'Reentrancy'})
+
+CREATE (var:Variable {name: 'balance', type: 'uint256', vulnerability: 'Reentrancy'})
+
+CREATE (e:ExternalContract {address: '0x123456789abcdef', name: 'External'})
+
+CREATE (m:MitigationTechnique {name: 'Check-Effects-Interaction Pattern', description: 'Ensure that all effects to the state are completed before calling external contracts'})
+
+CREATE (fix:Fix {description: 'Replace call.value() with a safer method', version: '0.6.9', fixType: 'Code change'})
+
+CREATE (r:Recommendation {description: 'Avoid using low-level calls', category: 'Coding practices', priority: 'High'})
+
+CREATE (llm:LLM_Insights {insights: 'The contract uses a dangerous call pattern that can lead to reentrancy attacks'})
+
+WITH c, v, cp, f, var, e, m, fix, r, llm
+
+MATCH (c), (v), (cp), (f), (var), (e), (m), (fix), (r), (llm)
+
+CREATE (c)-[:HAS_VULNERABILITY]->(v)
+
+CREATE (cp)-[:INDICATES]->(v)
+
+CREATE (f)-[:DEFINED_IN]->(c)
+
+CREATE (var)-[:USED_IN]->(f)
+
+CREATE (c)-[:INTERACTS_WITH]->(e)
+
+CREATE (m)-[:MITIGATES]->(v)
+
+CREATE (fix)-[:FIXES]->(v)
+
+CREATE (r)-[:RECOMMENDS]->(c)
+
+CREATE (c)-[:HAS_INSIGHT]->(llm)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'access-control'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'Unknown_Label_7'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'Unknown_Label_9'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'Unknown_Label_16'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'unchecked-calls'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'other'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create Contract node
+CREATE (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B', name: 'IERC20', sourceCode: 'pragma solidity 0.5.4; interface IERC20 { function balanceOf(address account) external view returns'})
+
+// Create Function node
+CREATE (f:Function {name: 'balanceOf', visibility: 'external', vulnerability: 'None'})
+
+// Create relationship between Contract and Function
+CREATE (c)-[:DEFINED_IN]->(f)
+
+// Create Variable node
+CREATE (v:Variable {name: 'account', type: 'address', vulnerability: 'None'})
+
+// Create relationship between Function and Variable
+CREATE (f)-[:USES]->(v)
+
+// Create ExternalContract node
+CREATE (e:ExternalContract {name: 'IERC20'})
+
+// Create relationship between Contract and ExternalContract
+CREATE (c)-[:INTERACTS_WITH]->(e)
+
+// Create Recommendation node
+CREATE (r:Recommendation {description: 'Ensure proper access control and security measures', category: 'Security', priority: 'High'})
+
+// Create relationship between Contract and Recommendation
+CREATE (c)-[:RECOMMENDS]->(r)
+
+// Create LLM_Insights node
+CREATE (i:LLM_Insights {auditSummary: 'The contract appears to be well-structured and secure, but further analysis is required'})
+
+// Create relationship between Contract and LLM_Insights
+CREATE (c)-[:HAS_INSIGHT]->(i)MATCH (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create Contract Node
+CREATE (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7', name: 'Contract1', sourceCode: 'pragma solidity 0.6.10; pragma experimental ABIEncoderV2; library BokkyPooBahsDateTimeLibrary { uint'})
+
+// Create Vulnerability Node
+CREATE (v:Vulnerability {name: 'Vulnerability1', description: 'Description1', severity: 'High', cweId: 'CWE-1', cveId: 'CVE-1'})
+
+// Create Relationship between Contract and Vulnerability
+CREATE (c)-[:HAS_VULNERABILITY]->(v)
+
+// Create CodePattern Node
+CREATE (cp:CodePattern {pattern: 'Pattern1', description: 'Description1', vulnerability: 'Vulnerability1'})
+
+// Create Relationship between CodePattern and Vulnerability
+CREATE (cp)-[:INDICATES]->(v)
+
+// Create Function Node
+CREATE (f:Function {name: 'Function1', visibility: 'Public', vulnerability: 'Vulnerability1'})
+
+// Create Relationship between Function and Contract
+CREATE (f)-[:DEFINED_IN]->(c)
+
+// Create Variable Node
+CREATE (var:Variable {name: 'Variable1', type: 'uint', vulnerability: 'Vulnerability1'})
+
+// Create Relationship between Variable and Contract
+CREATE (var)-[:USED_IN]->(c)
+
+// Create Control Flow Relationship between Functions
+CREATE (f)-[:CALLS]->(f)
+
+// Create Data Flow Relationship between Variable and Function
+CREATE (var)-[:READS_FROM]->(f)
+
+// Create External Interaction Node
+CREATE (e:ExternalContract {name: 'BokkyPooBahsDateTimeLibrary'})
+
+// Create Relationship between Contract and External Interaction
+CREATE (c)-[:INTERACTS_WITH]->(e)
+
+// Create Mitigation Technique Node
+CREATE (m:MitigationTechnique {name: 'Technique1', description: 'Description1'})
+
+// Create Relationship between Mitigation Technique and Vulnerability
+CREATE (m)-[:MITIGATES]->(v)
+
+// Create Fix Node
+CREATE (fix:Fix {description: 'Fix1', version: '1.0', fixType: 'Patch'})
+
+// Create Relationship between Fix and Vulnerability
+CREATE (fix)-[:FIXES]->(v)
+
+// Create Recommendation Node
+CREATE (r:Recommendation {description: 'Recommendation1', category: 'Security', priority: 'High'})
+
+// Create Relationship between Recommendation and Contract
+CREATE (r)-[:RECOMMENDS]->(c)
+
+// Create LLM_Insights Node
+CREATE (i:LLM_Insights {summary: 'Audit Summary1'})
+
+// Create Relationship between Contract and LLM_Insights
+CREATE (c)-[:HAS_INSIGHT]->(i)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_6'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_9'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7'}) MERGE (l:Label {name: 'Unknown_Label_7'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x010c5322d78c88ca18282b0a072a8913648b3038', name: 'Contract1', sourceCode: 'pragma solidity 0.6.5; pragma experimental ABIEncoderV2; struct UserInfo { uint256 amount; uint256 r'})
+
+CREATE (v:Variable {name: 'amount', type: 'uint256'})
+CREATE (v2:Variable {name: 'r', type: 'uint256'})
+
+CREATE (s:Struct {name: 'UserInfo'})
+
+CREATE (c)-[:HAS_VARIABLE]->(v)
+CREATE (c)-[:HAS_VARIABLE]->(v2)
+
+CREATE (s)-[:HAS_FIELD]->(v)
+CREATE (s)-[:HAS_FIELD]->(v2)
+
+CREATE (c)-[:HAS_STRUCT]->(s)
+
+WITH c, v, v2, s
+
+MATCH (c:Contract {address: '0x010c5322d78c88ca18282b0a072a8913648b3038'})
+MATCH (v:Variable {name: 'amount'})
+MATCH (v2:Variable {name: 'r'})
+MATCH (s:Struct {name: 'UserInfo'})
+
+CREATE (c)-[:HAS_VARIABLE]->(v)
+CREATE (c)-[:HAS_VARIABLE]->(v2)
+
+CREATE (s)-[:HAS_FIELD]->(v)
+CREATE (s)-[:HAS_FIELD]->(v2)
+
+CREATE (c)-[:HAS_STRUCT]->(s)MATCH (c:Contract {address: '0x010c5322d78c88ca18282b0a072a8913648b3038'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x0114622386c1a00686e594c70682d7aa0f8afa29', name: 'Contract1', sourceCode: 'pragma solidity 0.6.6; library Address { function isContract(address account) internal view returns'})
+
+CREATE (v:Vulnerability {name: 'Vulnerability1', description: 'Description1', severity: 'High', cweId: 'CWE-1', cveId: 'CVE-1'})
+
+CREATE (cp:CodePattern {pattern: 'Pattern1', description: 'Description1', vulnerability: 'Vulnerability1'})
+
+CREATE (f:Function {name: 'isContract', visibility: 'internal', vulnerability: 'None'})
+
+CREATE (var:Variable {name: 'account', type: 'address', vulnerability: 'None'})
+
+CREATE (ei:ExternalContract {name: 'Address', interactionType: 'Library'})
+
+CREATE (mt:MitigationTechnique {name: 'Technique1', description: 'Description1'})
+
+CREATE (fix:Fix {description: 'Fix1', version: '1.0', fixType: 'Patch'})
+
+CREATE (rec:Recommendation {description: 'Recommendation1', category: 'Security', priority: 'High'})
+
+CREATE (llm:LLM_Insights {summary: 'Audit summary'})
+
+WITH c, v, cp, f, var, ei, mt, fix, rec, llm
+
+MATCH (c:Contract), (v:Vulnerability), (cp:CodePattern), (f:Function), (var:Variable), (ei:ExternalContract), (mt:MitigationTechnique), (fix:Fix), (rec:Recommendation), (llm:LLM_Insights)
+
+CREATE (c)-[:HAS_VULNERABILITY]->(v)
+
+CREATE (cp)-[:INDICATES]->(v)
+
+CREATE (f)-[:DEFINED_IN]->(c)
+
+CREATE (var)-[:USED_IN]->(f)
+
+CREATE (c)-[:INTERACTS_WITH]->(ei)
+
+CREATE (mt)-[:MITIGATES]->(v)
+
+CREATE (fix)-[:FIXES]->(v)
+
+CREATE (rec)-[:RECOMMENDS]->(c)
+
+CREATE (c)-[:HAS_INSIGHT]->(llm)MATCH (c:Contract {address: '0x0114622386c1a00686e594c70682d7aa0f8afa29'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create Contract Node
+CREATE (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8', name: 'Initializable', sourceCode: 'pragma solidity 0.6.8; pragma experimental ABIEncoderV2; contract Initializable { bool private initi'})
+
+// Create Vulnerability Nodes
+CREATE (v1:Vulnerability {name: 'Reentrancy', description: 'Allows for nested calls to external functions', severity: 'High', cweId: 'CWE-833', cveId: 'CVE-2016-1000339'})
+CREATE (v2:Vulnerability {name: 'Integer Overflow/Underflow', description: 'Can lead to unexpected behavior due to number wrapping around value range', severity: 'Medium', cweId: 'CWE-190', cveId: 'CVE-2018-10299'})
+
+// Create Code Pattern Nodes
+CREATE (cp1:CodePattern {pattern: 'Nested external calls', description: 'Pattern indicating potential reentrancy vulnerability', vulnerability: 'Reentrancy'})
+CREATE (cp2:CodePattern {pattern: 'Unsafe arithmetic operations', description: 'Pattern indicating potential integer overflow/underflow vulnerability', vulnerability: 'Integer Overflow/Underflow'})
+
+// Create Function Nodes
+CREATE (f1:Function {name: 'init', visibility: 'private', vulnerability: 'None'})
+
+// Create Variable Nodes
+CREATE (v:Variable {name: 'initi', type: 'bool', vulnerability: 'None'})
+
+// Create External Interaction Nodes
+CREATE (e:ExternalContract {address: '0xExternalAddress', name: 'ExternalContract'})
+
+// Create Mitigation Technique Nodes
+CREATE (mt1:MitigationTechnique {name: 'Use SafeMath library', description: 'Prevents integer overflow/underflow', vulnerability: 'Integer Overflow/Underflow'})
+CREATE (mt2:MitigationTechnique {name: 'Use reentrancy guard', description: 'Prevents reentrancy attacks', vulnerability: 'Reentrancy'})
+
+// Create Fixes Nodes
+CREATE (fx1:Fix {description: 'Patch to fix reentrancy vulnerability', version: '1.0.1', fixType: 'Patch'})
+CREATE (fx2:Fix {description: 'Patch to fix integer overflow/underflow vulnerability', version: '1.0.2', fixType: 'Patch'})
+
+// Create Recommendation Nodes
+CREATE (r1:Recommendation {description: 'Use SafeMath library for all arithmetic operations', category: 'Security', priority: 'High'})
+CREATE (r2:Recommendation {description: 'Use a reentrancy guard for all external calls', category: 'Security', priority: 'High'})
+
+// Create LLM_Insights Node
+CREATE (i:LLM_Insights {auditSummary: 'The contract has potential vulnerabilities related to reentrancy and integer overflow/underflow'})
+
+// Establish Relationships
+CREATE (c)-[:HAS_VULNERABILITY]->(v1)
+CREATE (c)-[:HAS_VULNERABILITY]->(v2)
+CREATE (cp1)-[:INDICATES]->(v1)
+CREATE (cp2)-[:INDICATES]->(v2)
+CREATE (f1)-[:DEFINED_IN]->(c)
+CREATE (v)-[:USED_IN]->(f1)
+CREATE (c)-[:INTERACTS_WITH]->(e)
+CREATE (mt1)-[:MITIGATES]->(v2)
+CREATE (mt2)-[:MITIGATES]->(v1)
+CREATE (fx1)-[:FIXES]->(v1)
+CREATE (fx2)-[:FIXES]->(v2)
+CREATE (r1)-[:RECOMMENDS]->(c)
+CREATE (r2)-[:RECOMMENDS]->(c)
+CREATE (c)-[:HAS_INSIGHT]->(i)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'access-control'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'Unknown_Label_7'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'Unknown_Label_9'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'Unknown_Label_16'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'unchecked-calls'}) MERGE (c)-[:HAS_LABEL]->(l)MATCH (c:Contract {address: '0x01A6F6Ac4F5b2564e8C52BA687E7019D0E81E7e8'}) MERGE (l:Label {name: 'other'}) MERGE (c)-[:HAS_LABEL]->(l)
+
