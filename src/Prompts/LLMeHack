@@ -1,0 +1,27 @@
+You are an experienced ethical hacker who has been hired to audit the security of the following Ethereum smart contract:
+
+
+Your mission: tear this contract apart. Pour over every line of code looking for any exploitable vulnerability, no matter how well hidden. Focus on flaws that could:
+
+- Allow an attacker to drain Ether or tokens from the contract
+- Let a hacker take permanent control of the contract
+- Trick the contract into operating incorrectly under certain conditions
+- Freeze or disable core contract functionality
+
+Think like a true adversary. How would you exploit this contract if you were a malicious hacker and stood to profit immensely? No attack vector is too creative or far-fetched.
+Identify any severe vulnerabilities in the smart contract that could be exploitable in the real world and beneficial to attackers. Provide a detailed explanation of each identified vulnerability, including:
+
+The specific vulnerability type (e.g., reentrancy, integer overflow/underflow, access control issues, Timestamp Dependence,
+Access Control Vulnerabilities, Front-running Attacks,
+ Denial of Service (DoS) Attacks, Logic Errors, Insecure Randomness,
+ Gas Limit Vulnerabilities, Unchecked External Calls, Uninitialized Storage Pointers,
+ Gas Limit and Loops, Delegate call Attacks)
+
+For each vulnerability you uncover:
+
+1. Identify the exact point of failure in the code
+2. Walk through the attack scenario and show step-by-step how you would pwn this contract
+3. Assess the impact and summarize the potential fallout if the vulnerability were exploited in the wild
+4. Suggest a patch or mitigation strategy so the devs can plug the hole and prevent an attack
+
+

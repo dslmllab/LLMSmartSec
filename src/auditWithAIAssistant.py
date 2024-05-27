@@ -54,7 +54,7 @@ cost_per_request = 0.002
 def get_developer_assistant(client):
 
     # update your openAI assistant ID
-    assistant_id = 'asst_iGhR7Oh92xBjyJfd3nwMhAhj'
+    assistant_id = 'asst_iGxx'
     assistant = client.beta.assistants.retrieve(assistant_id)
     return assistant
 
@@ -102,7 +102,7 @@ for root, dirs, files in os.walk(project_folder):
 
                 run = client.beta.threads.runs.create(
                     thread_id= thread.id,
-                    assistant_id='asst_iGhR7Oh92xBjyJfd3nwMhAhj')
+                    assistant_id='asst_iGxx')
                 print(run.status)
 
                 while run.status != "completed":
