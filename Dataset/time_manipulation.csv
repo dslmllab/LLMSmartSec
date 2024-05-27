@@ -1,0 +1,212 @@
+filename,content,label
+ether_lotto.sol,"/*
+ * @article: https://blog.positive.com/predicting-random-numbers-in-ethereum-smart-contracts-e5358c6b8620
+ * @source: https://etherscan.io/address/0xa11e4ed59dc94e69612f3111942626ed513cb172#code
+ * @vulnerable_at_lines: 43
+ * @author: -
+ */
+
+ pragma solidity ^0.4.15;
+
+/// @title Ethereum Lottery Game.
+
+contract EtherLotto {
+
+    // Amount of ether needed for participating in the lottery.
+    uint constant TICKET_AMOUNT = 10;
+
+    // Fixed amount fee for each lottery game.
+    uint constant FEE_AMOUNT = 1;
+
+    // Address where fee is sent.
+    address public bank;
+
+    // Public jackpot that each participant can win (minus fee).
+    uint public pot;
+
+    // Lottery constructor sets bank account from the smart-contract owner.
+    function EtherLotto() {
+        bank = msg.sender;
+    }
+
+    // Public function for playing lottery. Each time this function
+    // is invoked, the sender has an oportunity for winning pot.
+    function play() payable {
+
+        // Participants must spend some fixed ether before playing lottery.
+        assert(msg.value == TICKET_AMOUNT);
+
+        // Increase pot for each participant.
+        pot += msg.value;
+
+        // Compute some *almost random* value for selecting winner from current transaction.
+        // <yes> <report> TIME_MANIPULATION
+        var random = uint(sha3(block.timestamp)) % 2;
+
+        // Distribution: 50% of participants will be winners.
+        if (random == 0) {
+
+            // Send fee to bank account.
+            bank.transfer(FEE_AMOUNT);
+
+            // Send jackpot to winner.
+            msg.sender.transfer(pot - FEE_AMOUNT);
+
+            // Restart jackpot.
+            pot = 0;
+        }
+    }
+
+}
+",time_manipulation
+roulette.sol,"/*
+ * @source: https://github.com/sigp/solidity-security-blog
+ * @author: -
+ * @vulnerable_at_lines: 18,20
+ */
+
+pragma solidity ^0.4.25;
+
+contract Roulette {
+    uint public pastBlockTime; // Forces one bet per block
+
+    constructor() public payable {} // initially fund contract
+
+    // fallback function used to make a bet
+    function () public payable {
+        require(msg.value == 10 ether); // must send 10 ether to play
+        // <yes> <report> TIME_MANIPULATION
+        require(now != pastBlockTime); // only 1 transaction per block
+        // <yes> <report> TIME_MANIPULATION
+        pastBlockTime = now;
+        if(now % 15 == 0) { // winner
+            msg.sender.transfer(this.balance);
+        }
+    }
+}
+",time_manipulation
+lottopollo.sol,"/*
+ * @source: https://github.com/seresistvanandras/EthBench/blob/master/Benchmark/Simple/timestampdependent.sol
+ * @author: -
+ * @vulnerable_at_lines: 13,27
+ */
+
+pragma solidity ^0.4.0;
+contract lottopollo {
+  address leader;
+  uint    timestamp;
+  function payOut(uint rand) internal {
+    // <yes> <report> TIME MANIPULATION
+    if ( rand> 0 && now - rand > 24 hours ) {
+      msg.sender.send( msg.value );
+
+      if ( this.balance > 0 ) {
+        leader.send( this.balance );
+      }
+    }
+    else if ( msg.value >= 1 ether ) {
+      leader = msg.sender;
+      timestamp = rand;
+    }
+  }
+  function randomGen() constant returns (uint randomNumber) {
+      // <yes> <report> TIME MANIPULATION
+      return block.timestamp;   
+    }
+  function draw(uint seed){
+    uint randomNumber=randomGen(); 
+    payOut(randomNumber);
+  }
+}",time_manipulation
+README.md,"# Time Manipulation
+Also known as timestamp dependence.
+
+From locking a token sale to unlocking funds at a specific time for a game, contracts sometimes need to rely on the current time. This is usually done via block.timestamp or its alias now in Solidity. But where does that value come from? From the miners! Because a transaction's miner has leeway in reporting the time at which the mining occurred, good smart contracts will avoid relying strongly on the time advertised. Note that block.timestamp is also sometimes (mis)used in the generation of random numbers as is discussed in #6. Bad Randomness.
+
+## Attack Scenario
+A game pays out the very first player at midnight today.
+A malicious miner includes his or her attempt to win the game and sets the timestamp to midnight.
+A bit before midnight the miner ends up mining the block. The real current time is ""close enough"" to midnight (the currently set timestamp for the block), other nodes on the network decide to accept the block.
+
+## Examples
+The following function only accepts calls that come after a specific date. Since miners can influence their block's timestamp (to a certain extent), they can attempt to mine a block containing their transaction with a block timestamp set in the future. If it is close enough, it will be accepted on the network and the transaction will give the miner ether before any other player could have attempted to win the game:
+```
+function play() public {
+	require(now > 1521763200 && neverPlayed == true);
+	neverPlayed = false;
+	msg.sender.transfer(1500 ether);
+}
+```
+
+## References
+Taken from [DASP TOP10](https://dasp.co/)",time_manipulation
+governmental_survey.sol,"/*
+ * @source: http://blockchain.unica.it/projects/ethereum-survey/attacks.html#governmental
+ * @author: -
+ * @vulnerable_at_lines: 27
+ */
+
+//added pragma version
+pragma solidity ^0.4.0;
+
+contract Governmental {
+  address public owner;
+  address public lastInvestor;
+  uint public jackpot = 1 ether;
+  uint public lastInvestmentTimestamp;
+  uint public ONE_MINUTE = 1 minutes;
+
+  function Governmental() {
+    owner = msg.sender;
+    if (msg.value<1 ether) throw;
+  }
+
+  function invest() {
+    if (msg.value<jackpot/2) throw;
+    lastInvestor = msg.sender;
+    jackpot += msg.value/2;
+    // <yes> <report> TIME_MANIPULATION
+    lastInvestmentTimestamp = block.timestamp;
+  }
+
+  function resetInvestment() {
+    if (block.timestamp < lastInvestmentTimestamp+ONE_MINUTE)
+      throw;
+
+    lastInvestor.send(jackpot);
+    owner.send(this.balance-1 ether);
+
+    lastInvestor = 0;
+    jackpot = 1 ether;
+    lastInvestmentTimestamp = 0;
+  }
+}
+
+contract Attacker {
+
+  function attack(address target, uint count) {
+    if (0<=count && count<1023) {
+      this.attack.gas(msg.gas-2000)(target, count+1);
+    }
+    else {
+      Governmental(target).resetInvestment();
+    }
+  }
+}
+",time_manipulation
+timed_crowdsale.sol,"/*
+ * @source: https://github.com/SmartContractSecurity/SWC-registry/blob/master/test_cases/timestamp_dependence/timed_crowdsale.sol
+ * @author: -
+ * @vulnerable_at_lines: 13
+ */
+
+pragma solidity ^0.4.25;
+
+contract TimedCrowdsale {
+  // Sale should finish exactly at January 1, 2019
+  function isSaleFinished() view public returns (bool) {
+    // <yes> <report> TIME_MANIPULATION
+    return block.timestamp >= 1546300800;
+  }
+}
+",time_manipulation
