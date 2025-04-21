@@ -1,6 +1,6 @@
-LLMSmartSec
+> LLMSmartSec
 
-@INPROCEEDINGS{10664261,
+> @INPROCEEDINGS{10664261,
   author={Mothukuri, Viraaji and Parizi, Reza M. and Massa, James L.},
   booktitle={2024 IEEE International Conference on Blockchain (Blockchain)}, 
   title={LLMSmartSec: Smart Contract Security Auditing with LLM and Annotated Control Flow Graph}, 
