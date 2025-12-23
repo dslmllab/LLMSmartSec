@@ -4,8 +4,10 @@ from time import sleep
 from openai import OpenAI
 import os
 import csv
+from dotenv import load_dotenv
 
-import os
+# Load environment variables from .env file
+load_dotenv()
 
 #Specify the files to reivew
 file_list = [
@@ -33,10 +35,11 @@ file_list = [
 
 
 
-#update with your open AI API Key
 def set_apikey():
-
-    api_key = 'sk-proj-'
+    """Get OpenAI API key from environment variables."""
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY not found in environment variables. Please create a .env file.")
     return api_key
 def pretty_print(messages):
     print("# Messages")
@@ -52,9 +55,10 @@ total_api_cost = 0.0
 
 cost_per_request = 0.002
 def get_developer_assistant(client):
-
-    # update your openAI assistant ID
-    assistant_id = 'asst_iGxx'
+    """Retrieve OpenAI Assistant using ID from environment variables."""
+    assistant_id = os.getenv("OPENAI_ASSISTANT_ID")
+    if not assistant_id:
+        raise ValueError("OPENAI_ASSISTANT_ID not found in environment variables. Please create a .env file.")
     assistant = client.beta.assistants.retrieve(assistant_id)
     return assistant
 
@@ -101,8 +105,8 @@ for root, dirs, files in os.walk(project_folder):
                 )
 
                 run = client.beta.threads.runs.create(
-                    thread_id= thread.id,
-                    assistant_id='asst_iGxx')
+                    thread_id=thread.id,
+                    assistant_id=assistant.id)
                 print(run.status)
 
                 while run.status != "completed":

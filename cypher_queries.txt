@@ -1,0 +1,244 @@
+CREATE (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B', name: 'ZildFinanceCoin', sourceCode: 'Solidity code here'})
+CREATE (v:Vulnerability {name: 'Reentrancy', description: 'Allows for nested calls to external functions', severity: 'High', cweId: 'CWE-862', cveId: 'CVE-2016-1000339'})
+CREATE (cp:CodePattern {pattern: 'Nested function calls', description: 'Nested calls to external functions can lead to reentrancy attacks', vulnerability: 'Reentrancy'})
+CREATE (f:Function {name: 'transfer', visibility: 'public', vulnerability: 'Reentrancy'})
+CREATE (var:Variable {name: '_balances', type: 'mapping', vulnerability: 'Reentrancy'})
+CREATE (ec:ExternalContract {name: 'IERC20', sourceCode: 'Interface code here'})
+CREATE (mt:MitigationTechnique {name: 'Check-Effects-Interaction Pattern', description: 'Ensure that all conditions are checked before making calls to external contracts'})
+CREATE (fix:Fix {description: 'Refactor code to follow the Check-Effects-Interaction pattern', version: '0.5.5', fixType: 'Code Refactoring'})
+CREATE (rec:Recommendation {description: 'Avoid making calls to external contracts in the middle of a function', category: 'Coding Best Practices', priority: 'High'})
+CREATE (ins:LLM_Insights {auditSummary: 'The contract has potential reentrancy vulnerabilities due to nested calls to external contracts'})
+
+WITH c, v, cp, f, var, ec, mt, fix, rec, ins
+CREATE (c)-[:HAS_VULNERABILITY]->(v)
+CREATE (cp)-[:INDICATES]->(v)
+CREATE (f)-[:DEFINED_IN]->(c)
+CREATE (var)-[:USED_IN]->(f)
+CREATE (c)-[:INTERACTS_WITH]->(ec)
+CREATE (mt)-[:MITIGATES]->(v)
+CREATE (fix)-[:FIXES]->(v)
+CREATE (rec)-[:RECOMMENDS]->(c)
+CREATE (c)-[:HAS_INSIGHT]->(ins)MATCH (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B', name: 'ZildFinanceCoin', sourceCode: 'Solidity code here'})
+CREATE (v1:Vulnerability {name: 'Reentrancy', description: 'Allows for nested calls to external functions', severity: 'High', cweId: 'CWE-862', cveId: 'CVE-2018-10299'})
+CREATE (v2:Vulnerability {name: 'Integer Overflow/Underflow', description: 'Can lead to unexpected behavior due to number wrapping', severity: 'Medium', cweId: 'CWE-190', cveId: 'CVE-2018-10299'})
+CREATE (v3:Vulnerability {name: 'Access Control', description: 'Improper restriction of access to functions', severity: 'High', cweId: 'CWE-284', cveId: 'CVE-2018-10299'})
+CREATE (c)-[:HAS_VULNERABILITY]->(v1), (c)-[:HAS_VULNERABILITY]->(v2), (c)-[:HAS_VULNERABILITY]->(v3)
+
+CREATE (cp1:CodePattern {pattern: 'msg.sender == _owner', description: 'Checks if the sender is the owner', vulnerability: 'Access Control'})
+CREATE (cp1)-[:INDICATES]->(v3)
+
+CREATE (f1:Function {name: 'transfer', visibility: 'public', vulnerability: 'Reentrancy'})
+CREATE (f1)-[:DEFINED_IN]->(c)
+
+CREATE (v:Variable {name: '_balances', type: 'mapping', vulnerability: 'Integer Overflow/Underflow'})
+CREATE (v)-[:USED_IN]->(f1)
+
+CREATE (f2:Function {name: 'approve', visibility: 'public'})
+CREATE (f2)-[:DEFINED_IN]->(c)
+CREATE (f2)-[:CALLS]->(f1)
+
+CREATE (ec:ExternalContract {name: 'IERC20'})
+CREATE (c)-[:INTERACTS_WITH]->(ec)
+
+CREATE (mt:MitigationTechnique {name: 'Use of SafeMath library', description: 'Prevents integer overflow/underflow by checking conditions before operations'})
+CREATE (mt)-[:MITIGATES]->(v2)
+
+CREATE (fix:Fix {description: 'Update to latest Solidity version', version: '0.8.0', fixType: 'Version Upgrade'})
+CREATE (fix)-[:FIXES]->(v1)
+
+CREATE (rec:Recommendation {description: 'Regularly audit smart contracts', category: 'Security', priority: 'High'})
+CREATE (rec)-[:SUGGESTS]->(c)
+
+CREATE (insight:LLM_Insights {summary: 'The contract uses outdated Solidity version and has potential reentrancy, access control and integer overflow/underflow vulnerabilities'})
+CREATE (c)-[:HAS_INSIGHT]->(insight)MATCH (c:Contract {address: '0x006699d34AA3013605d468d2755A2Fe59A16B12B'}) MERGE (l:Label {name: 'safe'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+// Create Contract Node
+CREATE (c:Contract {address: '0x010c5322d78c88ca18282b0a072a8913648b3038', name: 'SashimiStakingAdapter', sourceCode: 'Solidity code here'})
+
+// Create Function Nodes
+CREATE (f1:Function {name: 'getBalance', visibility: 'external', vulnerability: 'None'})
+CREATE (f2:Function {name: 'adapterType', visibility: 'external', vulnerability: 'None'})
+CREATE (f3:Function {name: 'tokenType', visibility: 'external', vulnerability: 'None'})
+
+// Create Variable Nodes
+CREATE (v1:Variable {name: 'SASHIMI', type: 'address', vulnerability: 'None'})
+CREATE (v2:Variable {name: 'MASTER_CHEF', type: 'address', vulnerability: 'None'})
+
+// Create External Interaction Nodes
+CREATE (e1:ExternalContract {name: 'ProtocolAdapter'})
+CREATE (e2:ExternalContract {name: 'MasterChef'})
+
+// Create Relationships
+CREATE (c)-[:DEFINED_IN]->(f1)
+CREATE (c)-[:DEFINED_IN]->(f2)
+CREATE (c)-[:DEFINED_IN]->(f3)
+CREATE (c)-[:USED_IN]->(v1)
+CREATE (c)-[:USED_IN]->(v2)
+CREATE (f1)-[:CALLS_EXTERNAL]->(e2)
+CREATE (f2)-[:CALLS_EXTERNAL]->(e1)
+CREATE (f3)-[:CALLS_EXTERNAL]->(e1)
+
+// Create LLM_Insights Node
+CREATE (i:LLM_Insights {auditSummary: 'The contract appears to be well-structured and does not exhibit any obvious vulnerabilities. However, further analysis is required to ensure its security.'})
+
+// Connect Contract Node to LLM_Insights Node
+CREATE (c)-[:HAS_INSIGHT]->(i)MATCH (c:Contract {address: '0x010c5322d78c88ca18282b0a072a8913648b3038'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x01b23286ff60a543ec29366ae8d6b6274ca20541', name: 'BMPToken', sourceCode: 'pragma solidity 0.4.26; ...'})
+
+CREATE (v1:Vulnerability {name: 'Reentrancy', description: '...', severity: 'High', cweId: 'CWE-833', cveId: 'CVE-2016-1000339'})
+CREATE (v2:Vulnerability {name: 'Integer Overflow/Underflow', description: '...', severity: 'Medium', cweId: 'CWE-190', cveId: 'CVE-2018-10299'})
+
+CREATE (c)-[:HAS_VULNERABILITY]->(v1)
+CREATE (c)-[:HAS_VULNERABILITY]->(v2)
+
+CREATE (cp1:CodePattern {pattern: '...', description: '...', vulnerability: 'Reentrancy'})
+CREATE (cp2:CodePattern {pattern: '...', description: '...', vulnerability: 'Integer Overflow/Underflow'})
+
+CREATE (cp1)-[:INDICATES]->(v1)
+CREATE (cp2)-[:INDICATES]->(v2)
+
+CREATE (f1:Function {name: 'transfer', visibility: 'public', vulnerability: 'Reentrancy'})
+CREATE (f2:Function {name: 'approve', visibility: 'public', vulnerability: 'Integer Overflow/Underflow'})
+
+CREATE (f1)-[:DEFINED_IN]->(c)
+CREATE (f2)-[:DEFINED_IN]->(c)
+
+CREATE (v:Variable {name: '_balances', type: 'mapping', vulnerability: 'Reentrancy'})
+CREATE (v)-[:USED_IN]->(f1)
+
+CREATE (f1)-[:CALLS]->(f2)
+
+CREATE (ec:ExternalContract {address: '...', name: 'IERC20'})
+CREATE (c)-[:INTERACTS_WITH]->(ec)
+
+CREATE (mt:MitigationTechnique {name: '...', description: '...'})
+CREATE (mt)-[:MITIGATES]->(v1)
+
+CREATE (fix:Fix {description: '...', version: '...', fixType: 'Patch'})
+CREATE (fix)-[:FIXES]->(v1)
+
+CREATE (rec:Recommendation {description: '...', category: '...', priority: 'High'})
+CREATE (rec)-[:RECOMMENDS]->(c)
+
+CREATE (insight:LLM_Insights {summary: '...', observations: '...'})
+CREATE (c)-[:HAS_INSIGHT]->(insight)MATCH (c:Contract {address: '0x01b23286ff60a543ec29366ae8d6b6274ca20541'}) MERGE (l:Label {name: 'other'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a', name: 'OrionToken', sourceCode: 'Solidity code here'})
+CREATE (f1:Function {name: '_msgSender', visibility: 'internal', vulnerability: 'None'})
+CREATE (f2:Function {name: '_msgData', visibility: 'internal', vulnerability: 'None'})
+CREATE (f3:Function {name: 'totalSupply', visibility: 'external', vulnerability: 'None'})
+CREATE (f4:Function {name: 'balanceOf', visibility: 'external', vulnerability: 'None'})
+CREATE (f5:Function {name: 'transfer', visibility: 'public', vulnerability: 'None'})
+CREATE (f6:Function {name: 'allowance', visibility: 'public', vulnerability: 'None'})
+CREATE (f7:Function {name: 'approve', visibility: 'public', vulnerability: 'None'})
+CREATE (f8:Function {name: 'transferFrom', visibility: 'public', vulnerability: 'None'})
+CREATE (f9:Function {name: 'increaseAllowance', visibility: 'public', vulnerability: 'None'})
+CREATE (f10:Function {name: 'decreaseAllowance', visibility: 'public', vulnerability: 'None'})
+CREATE (f11:Function {name: '_transfer', visibility: 'internal', vulnerability: 'None'})
+CREATE (f12:Function {name: '_mint', visibility: 'internal', vulnerability: 'None'})
+CREATE (f13:Function {name: '_burn', visibility: 'internal', vulnerability: 'None'})
+CREATE (f14:Function {name: '_approve', visibility: 'internal', vulnerability: 'None'})
+CREATE (f15:Function {name: '_burnFrom', visibility: 'internal', vulnerability: 'None'})
+CREATE (f16:Function {name: 'mint', visibility: 'public', vulnerability: 'None'})
+CREATE (f17:Function {name: '_mint', visibility: 'internal', vulnerability: 'None'})
+CREATE (v1:Variable {name: '_balances', type: 'mapping', vulnerability: 'None'})
+CREATE (v2:Variable {name: '_allowances', type: 'mapping', vulnerability: 'None'})
+CREATE (v3:Variable {name: '_totalSupply', type: 'uint256', vulnerability: 'None'})
+CREATE (v4:Variable {name: '_cap', type: 'uint256', vulnerability: 'None'})
+CREATE (c)-[:HAS_FUNCTION]->(f1)
+CREATE (c)-[:HAS_FUNCTION]->(f2)
+CREATE (c)-[:HAS_FUNCTION]->(f3)
+CREATE (c)-[:HAS_FUNCTION]->(f4)
+CREATE (c)-[:HAS_FUNCTION]->(f5)
+CREATE (c)-[:HAS_FUNCTION]->(f6)
+CREATE (c)-[:HAS_FUNCTION]->(f7)
+CREATE (c)-[:HAS_FUNCTION]->(f8)
+CREATE (c)-[:HAS_FUNCTION]->(f9)
+CREATE (c)-[:HAS_FUNCTION]->(f10)
+CREATE (c)-[:HAS_FUNCTION]->(f11)
+CREATE (c)-[:HAS_FUNCTION]->(f12)
+CREATE (c)-[:HAS_FUNCTION]->(f13)
+CREATE (c)-[:HAS_FUNCTION]->(f14)
+CREATE (c)-[:HAS_FUNCTION]->(f15)
+CREATE (c)-[:HAS_FUNCTION]->(f16)
+CREATE (c)-[:HAS_FUNCTION]->(f17)
+CREATE (c)-[:HAS_VARIABLE]->(v1)
+CREATE (c)-[:HAS_VARIABLE]->(v2)
+CREATE (c)-[:HAS_VARIABLE]->(v3)
+CREATE (c)-[:HAS_VARIABLE]->(v4)MATCH (c:Contract {address: '0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x0263e1dcfcaaad8fd4e840fe4b22854485a561f0', name: 'BitlesToken', sourceCode: 'pragma solidity 0.6.6; ...'})
+
+CREATE (v1:Vulnerability {name: 'Reentrancy', description: '...', severity: 'High', cweId: 'CWE-833', cveId: 'CVE-2016-1000338'})
+CREATE (v2:Vulnerability {name: 'Integer Overflow/Underflow', description: '...', severity: 'Medium', cweId: 'CWE-190', cveId: 'CVE-2018-10299'})
+
+CREATE (c)-[:HAS_VULNERABILITY]->(v1)
+CREATE (c)-[:HAS_VULNERABILITY]->(v2)
+
+CREATE (cp1:CodePattern {pattern: '...', description: '...', vulnerability: 'Reentrancy'})
+CREATE (cp2:CodePattern {pattern: '...', description: '...', vulnerability: 'Integer Overflow/Underflow'})
+
+CREATE (cp1)-[:INDICATES]->(v1)
+CREATE (cp2)-[:INDICATES]->(v2)
+
+CREATE (f1:Function {name: 'transfer', visibility: 'public', vulnerability: 'Reentrancy'})
+CREATE (f2:Function {name: 'approve', visibility: 'public', vulnerability: 'Integer Overflow/Underflow'})
+
+CREATE (f1)-[:DEFINED_IN]->(c)
+CREATE (f2)-[:DEFINED_IN]->(c)
+
+CREATE (v:Variable {name: '_balances', type: 'mapping', vulnerability: 'Reentrancy'})
+CREATE (v)-[:USED_IN]->(f1)
+
+CREATE (f1)-[:CALLS]->(f2)
+
+CREATE (ec:ExternalContract {address: '...', name: 'IERC20'})
+CREATE (c)-[:INTERACTS_WITH]->(ec)
+
+CREATE (mt1:MitigationTechnique {name: '...', description: '...'})
+CREATE (mt1)-[:MITIGATES]->(v1)
+
+CREATE (fix1:Fix {description: '...', version: '0.6.7', fixType: 'Patch'})
+CREATE (fix1)-[:FIXES]->(v1)
+
+CREATE (rec:Recommendation {description: '...', category: 'Security', priority: 'High'})
+CREATE (rec)-[:RECOMMENDS]->(c)
+
+CREATE (insight:LLM_Insights {summary: '...', observations: '...'})
+CREATE (c)-[:HAS_INSIGHT]->(insight)MATCH (c:Contract {address: '0x0263e1dcfcaaad8fd4e840fe4b22854485a561f0'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+
+CREATE (c:Contract {address: '0x0319a976c8dea5d31d1cf36eaffd8bec14957179', name: 'SushiStakingAdapter', sourceCode: '...'})
+CREATE (v:Variable {name: 'SUSHI', type: 'address', vulnerability: 'None'})
+CREATE (v2:Variable {name: 'MASTER_CHEF', type: 'address', vulnerability: 'None'})
+CREATE (f:Function {name: 'getBalance', visibility: 'external', vulnerability: 'None'})
+CREATE (f2:Function {name: 'sub', visibility: 'internal', vulnerability: 'None'})
+CREATE (f3:Function {name: 'mul', visibility: 'internal', vulnerability: 'None'})
+CREATE (i:Interface {name: 'ProtocolAdapter'})
+CREATE (i2:Interface {name: 'MasterChef'})
+CREATE (s:Struct {name: 'UserInfo'})
+CREATE (s2:Struct {name: 'PoolInfo'})
+
+CREATE (c)-[:DEFINES]->(v)
+CREATE (c)-[:DEFINES]->(v2)
+CREATE (c)-[:DEFINES]->(f)
+CREATE (c)-[:DEFINES]->(f2)
+CREATE (c)-[:DEFINES]->(f3)
+CREATE (c)-[:USES]->(i)
+CREATE (c)-[:USES]->(i2)
+CREATE (c)-[:USES]->(s)
+CREATE (c)-[:USES]->(s2)
+
+CREATE (f)-[:CALLS_EXTERNAL]->(i2)
+CREATE (f)-[:READS_FROM]->(v)
+CREATE (f)-[:READS_FROM]->(v2)
+CREATE (f2)-[:READS_FROM]->(v)
+CREATE (f3)-[:READS_FROM]->(v2)
+
+WITH c, v, v2, f, f2, f3, i, i2, s, s2
+MATCH (c)
+CREATE (insights:LLM_Insights {summary: 'The contract uses external interfaces and has potential for optimization.'})
+CREATE (c)-[:HAS_INSIGHT]->(insights)MATCH (c:Contract {address: '0x0319a976c8dea5d31d1cf36eaffd8bec14957179'}) MERGE (l:Label {name: 'Unknown_Label_38'}) MERGE (c)-[:HAS_LABEL]->(l)
+

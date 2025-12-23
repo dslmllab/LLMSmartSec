@@ -7,17 +7,23 @@ from neo4j import GraphDatabase
 import csv
 import re
 from neo4j.exceptions import CypherSyntaxError
+from dotenv import load_dotenv
 
-#Update the key with your openai key.
+# Load environment variables from .env file
+load_dotenv()
 
-os.environ["OPENAI_API_KEY"] = "sk-"
+# OpenAI API Key from environment
+openai_api_key = os.getenv("OPENAI_API_KEY")
+if not openai_api_key:
+    raise ValueError("OPENAI_API_KEY not found in environment variables. Please create a .env file.")
+os.environ["OPENAI_API_KEY"] = openai_api_key
 
-
-#Give your local neo4j desktop password.
-
-uri = "bolt://localhost:7687"
-user = "neo4j"
-password = "changeme7"
+# Neo4j configuration from environment
+uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
+user = os.getenv("NEO4J_USER", "neo4j")
+password = os.getenv("NEO4J_PASSWORD")
+if not password:
+    raise ValueError("NEO4J_PASSWORD not found in environment variables. Please create a .env file.")
 driver = GraphDatabase.driver(uri, auth=(user, password))
 
 
@@ -42,22 +48,16 @@ def extract_cypher_queries(text):
     return cypher_queries
 
 def preprocess_code(code):
-
+    """Preprocess Solidity code by removing comments and normalizing whitespace."""
+    # Remove single-line comments
     code = re.sub(r'\/\/.*', '', code)
-
-
+    # Remove multi-line comments
     code = re.sub(r'\/\*[\s\S]*?\*\/', '', code)
-
-
-    code = re.sub(r'\s+', ' ', code)
-
-
-    #max_line_length = 100
-    #code_lines = code.split('\n')
-    #truncated_lines = [line[:max_line_length] for line in code_lines]
-    code = '\n'.join(code)
-
-    return code
+    # Normalize whitespace (collapse multiple spaces/tabs, preserve newlines)
+    code = re.sub(r'[^\S\n]+', ' ', code)
+    # Remove empty lines
+    code = re.sub(r'\n\s*\n', '\n', code)
+    return code.strip()
 
 def generate_cypher_queries(contract_address, code, example):
     label_name = []
@@ -233,7 +233,7 @@ def main():
     output_file = "cypher_queries.txt"
     batch_size = 1
     num_examples = len(dataset["train"])
-    num_examples = 5
+    num_examples = 10  # Load 10 contracts for better pattern coverage
 
     for start_index in range(0, num_examples, batch_size):
         end_index = min(start_index + batch_size, num_examples)
